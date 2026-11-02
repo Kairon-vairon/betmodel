@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Value bets</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button{font-family:inherit;cursor:pointer}
+input::placeholder{color:#8994A3}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 232px; background: #11161D; border-right: 1px solid #222A35; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 36px; height: 36px; border-radius: 10px; background: #C6F36B; color: #0E1116; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L12 5l8 13"></path><path d="M8.5 13h7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">Edgewise</span>
+<span style="font-size: 12px; color: #8994A3">Value finder · Phase 1</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Dashboard</a>
+<a href="ValueBets.dc.html" aria-current="page" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; background: #1B232D; color: #E8EDF3; text-decoration: none; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg><span style="flex: 1">Value bets</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #C6F36B; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{pendingCount}}</span></a>
+<a href="BetLog.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Model &amp; performance</a>
+<a href="Settings.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Settings &amp; limits</a>
+<span style="flex: 1 1 100%; padding: 14px 12px 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Claude</span>
+<a href="Analyst.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"></path><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z"></path></svg>Claude analyst</a>
+<a href="Lab.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><path d="M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"></path><path d="M7.5 15h9"></path></svg><span style="flex: 1">Lab &amp; releases</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #B9A3FF; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></a>
+</div>
+<div style="margin-top: auto; background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Data feeds</span>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Betfair prices · live</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Bookmaker odds · 5 min</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Results · auto-settle on</div>
+<div style="border-top: 1px solid #232C38; padding-top: 10px; color: #8994A3">Placement: <span style="color: #E8EDF3">manual at bookmaker</span></div>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+<span style="font-size: 13px; color: #8994A3">Approval queue · Sample data</span>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">Value bets</h1>
+<span style="font-size: 14px; color: #A1ACBA; line-height: 1.5">Bookmaker prices that beat the Betfair fair price by at least 3%. Place the bet in the bookmaker app, then confirm it here with the odds you got. Nothing is placed for you.</span>
+</div>
+<div style="flex: 0 1 340px; min-width: 260px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 10px; font-size: 13px"><span style="color: #C9D2DD">Today's exposure</span><span style="font-family: 'IBM Plex Mono', monospace">{{exposureLabel}}</span></div>
+<div style="height: 8px; border-radius: 4px; background: #222A35; display: flex; overflow: hidden"><div style="width: {{placedPct}}; height: 8px; background: #C6F36B"></div><div style="width: {{queuedPct}}; height: 8px; background: rgba(198,243,107,0.35)"></div></div>
+<div style="display: flex; gap: 16px; font-size: 12px; color: #8994A3"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #C6F36B"></span>Placed {{placedLabel}}</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; background: rgba(198,243,107,0.35)"></span>Queued {{queuedLabel}}</span></div>
+</div>
+</header>
+
+<div role="group" aria-label="Filter by league" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<sc-for list="{{leagues}}" as="l" hint-placeholder-count="6">
+<sc-if value="{{l.active}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{l.pick}}" style="min-height: 40px; padding: 0 14px; border-radius: 20px; border: 1px solid #C6F36B; background: #C6F36B; color: #0E1116; font-size: 13px; font-weight: 600">{{l.label}} · {{l.count}}</button>
+</sc-if>
+<sc-if value="{{l.inactive}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{l.pick}}" style="min-height: 40px; padding: 0 14px; border-radius: 20px; border: 1px solid #2C3644; background: #151B23; color: #C9D2DD; font-size: 13px; font-weight: 500">{{l.label}} · {{l.count}}</button>
+</sc-if>
+</sc-for>
+<span style="margin-left: auto; font-size: 13px; color: #8994A3">Sorted by time left to approve</span>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+
+<div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<sc-if value="{{noBets}}" hint-placeholder-val="{{false}}">
+<div style="background: #151B23; border: 1px dashed #2C3644; border-radius: 16px; padding: 40px 24px; text-align: center; color: #A1ACBA; font-size: 14px">No value bets in this league right now. The next odds scan runs in 4 minutes.</div>
+</sc-if>
+<sc-for list="{{bets}}" as="b" hint-placeholder-count="3">
+<article style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 22px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12px; color: #8994A3">
+<span style="padding: 3px 8px; border-radius: 6px; background: #1E2632; color: #C9D2DD; font-weight: 600">{{b.league}}</span>
+<span>Kick-off {{b.kickoff}} AEDT</span>
+</div>
+<h2 style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em">{{b.match}}</h2>
+<span style="font-size: 14px; color: #A1ACBA">{{b.market}} → <span style="color: #E8EDF3; font-weight: 600">{{b.pick}}</span></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 30px; font-weight: 600; color: #C6F36B">{{b.edge}}</span>
+<span style="font-size: 12px; color: #8994A3">edge vs fair price</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid #222A35; border-bottom: 1px solid #222A35; background: #121820">
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Bet at</span>
+<span style="font-size: 15px">{{b.book}} <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600">${{b.odds}}</span></span>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Betfair fair</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px">${{b.fair}} <span style="color: #8994A3">· {{b.fairProb}}</span></span>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Shadow model</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: {{b.modelColor}}">{{b.model}}</span>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Stake</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600">{{b.stake}}</span>
+<span style="font-size: 12px; color: #8994A3">{{b.stakeNote}}</span>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Don't take below</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px">${{b.minOdds}}</span>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; color: #8994A3; text-transform: uppercase; letter-spacing: 0.06em">Approve within</span>
+<span style="font-size: 15px; color: #C9D2DD">{{b.expires}}</span>
+</div>
+</div>
+<div style="padding: 14px 22px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: #8994A3; align-items: center">
+<span>Other prices</span>
+<sc-for list="{{b.others}}" as="o" hint-placeholder-count="4">
+<span style="color: #C9D2DD">{{o.book}} <span style="font-family: 'IBM Plex Mono', monospace">${{o.odds}}</span></span>
+</sc-for>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD; line-height: 1.5">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8994A3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+<span>{{b.reason}}</span>
+</div>
+</div>
+<sc-if value="{{b.isPending}}" hint-placeholder-val="{{true}}">
+<div style="padding: 14px 22px 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; border-top: 1px solid #222A35">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="odds-{{b.id}}" style="font-size: 12px; color: #A1ACBA">Odds you got</label>
+<input id="odds-{{b.id}}" type="text" inputmode="decimal" placeholder="{{b.odds}}" style="width: 120px; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Mono', monospace; font-size: 15px">
+</div>
+<button type="button" onClick="{{b.place}}" style="height: 44px; padding: 0 20px; border-radius: 10px; border: none; background: #C6F36B; color: #0E1116; font-size: 14px; font-weight: 600">I placed it</button>
+<button type="button" onClick="{{b.skip}}" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 14px; font-weight: 500">Skip</button>
+<span style="margin-left: auto; font-size: 12px; color: #8994A3; align-self: center">Odds below ${{b.minOdds}}? Skip it — the edge is gone.</span>
+</div>
+</sc-if>
+<sc-if value="{{b.isPlaced}}" hint-placeholder-val="{{false}}">
+<div style="padding: 14px 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border-top: 1px solid #222A35; background: rgba(198,243,107,0.07)">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
+<span style="flex: 1; min-width: 220px; font-size: 14px; color: #E8EDF3">Logged as placed at {{b.book}} ${{b.odds}} for {{b.stake}}. It will be graded automatically after full time.</span>
+<button type="button" onClick="{{b.undo}}" style="min-height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #C9D2DD; font-size: 13px">Undo</button>
+</div>
+</sc-if>
+<sc-if value="{{b.isSkipped}}" hint-placeholder-val="{{false}}">
+<div style="padding: 14px 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; border-top: 1px solid #222A35; background: #121820">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A1ACBA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+<span style="flex: 1; min-width: 220px; font-size: 14px; color: #C9D2DD">Skipped. Still tracked in the bet log, so you can see whether your skips help or hurt.</span>
+<button type="button" onClick="{{b.undo}}" style="min-height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #C9D2DD; font-size: 13px">Undo</button>
+</div>
+</sc-if>
+</article>
+</sc-for>
+</div>
+
+<aside style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<section aria-labelledby="how-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="how-h" style="margin: 0; font-size: 16px; font-weight: 600">Confirming a bet</h2>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 24px; height: 24px; border-radius: 12px; background: #1E2632; color: #C6F36B; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><span style="font-size: 14px; color: #C9D2DD; line-height: 1.5">Open the bookmaker app and find the market.</span></div>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 24px; height: 24px; border-radius: 12px; background: #1E2632; color: #C6F36B; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><span style="font-size: 14px; color: #C9D2DD; line-height: 1.5">Check the price is at or above the minimum odds.</span></div>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 24px; height: 24px; border-radius: 12px; background: #1E2632; color: #C6F36B; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><span style="font-size: 14px; color: #C9D2DD; line-height: 1.5">Place the suggested stake, then tap I placed it with the odds you actually got.</span></div>
+</section>
+<section aria-labelledby="calc-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 id="calc-h" style="margin: 0; font-size: 16px; font-weight: 600">How the numbers work</h2>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #8994A3">Edge</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #E8EDF3">odds × fair probability − 1</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #8994A3">Stake</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #E8EDF3">¼ × edge ÷ (odds − 1) × bankroll</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #8994A3">Minimum odds</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #E8EDF3">price where edge drops to 2%</span></div>
+<span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">The shadow model is shown for comparison only. It doesn't decide anything until it earns promotion.</span>
+</section>
+<section aria-labelledby="sess-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 id="sess-h" style="margin: 0; font-size: 16px; font-weight: 600">This session</h2>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #C9D2DD">Placed</span><span style="font-family: 'IBM Plex Mono', monospace">{{placedCount}}</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #C9D2DD">Skipped</span><span style="font-family: 'IBM Plex Mono', monospace">{{skippedCount}}</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #C9D2DD">Still waiting</span><span style="font-family: 'IBM Plex Mono', monospace">{{pendingCount}}</span></div>
+<a href="BetLog.dc.html" style="font-size: 14px; font-weight: 500; text-decoration: none; min-height: 44px; display: flex; align-items: center">See everything in the bet log →</a>
+</section>
+</aside>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1420}}'>
+class Component extends DCLogic {
+  state = { status: {}, league: 'All' };
+
+  data() {
+    return [
+      { id: 'b1', league: 'EPL', kickoff: 'Sun 8 Nov 02:00', match: 'Brighton v Everton', market: 'Match result', pick: 'Brighton', book: 'Sportsbet', odds: '1.95', fair: '1.85', fairProb: '54.2%', model: '55.1%', agrees: true, edge: '+5.7%', stakeNum: 33, stake: '$33', stakeNote: '¼ Kelly · 1.5% of bank', minOdds: '1.88', expires: '14 min',
+        others: [{ book: 'Ladbrokes', odds: '1.90' }, { book: 'Neds', odds: '1.90' }, { book: 'TAB', odds: '1.88' }, { book: 'bet365', odds: '1.87' }],
+        reason: 'Betfair shortened from $1.95 to $1.85 after Everton’s team news. Sportsbet hasn’t moved yet.' },
+      { id: 'b2', league: 'La Liga', kickoff: 'Sun 8 Nov 07:00', match: 'Real Sociedad v Osasuna', market: 'Total goals', pick: 'Under 2.5', book: 'TAB', odds: '1.80', fair: '1.70', fairProb: '58.9%', model: '60.2%', agrees: true, edge: '+6.0%', stakeNum: 41, stake: '$41', stakeNote: '¼ Kelly · 1.9% of bank', minOdds: '1.74', expires: '22 min',
+        others: [{ book: 'bet365', odds: '1.73' }, { book: 'Sportsbet', odds: '1.72' }, { book: 'Ladbrokes', odds: '1.70' }, { book: 'Neds', odds: '1.70' }],
+        reason: 'TAB is $0.07 or more above every other bookmaker on this total.' },
+      { id: 'b3', league: 'Bundesliga', kickoff: 'Sun 8 Nov 01:30', match: 'Freiburg v Mainz', market: 'Both teams to score', pick: 'Yes', book: 'Ladbrokes', odds: '1.83', fair: '1.74', fairProb: '57.4%', model: '56.8%', agrees: true, edge: '+5.0%', stakeNum: 15, stake: '$15', stakeNote: 'Capped from $33 · account limit', minOdds: '1.78', expires: '31 min',
+        others: [{ book: 'bet365', odds: '1.77' }, { book: 'Neds', odds: '1.76' }, { book: 'Sportsbet', odds: '1.75' }, { book: 'TAB', odds: '1.72' }],
+        reason: 'Only Ladbrokes clears the 3% threshold, and your stake there is limited to $15.' },
+      { id: 'b4', league: 'Ligue 1', kickoff: 'Sun 8 Nov 03:00', match: 'Lens v Toulouse', market: 'Match result', pick: 'Draw', book: 'bet365', odds: '3.70', fair: '3.44', fairProb: '29.1%', model: '30.4%', agrees: true, edge: '+7.7%', stakeNum: 16, stake: '$16', stakeNote: '¼ Kelly · 0.7% of bank', minOdds: '3.50', expires: '38 min',
+        others: [{ book: 'Ladbrokes', odds: '3.45' }, { book: 'Neds', odds: '3.45' }, { book: 'Sportsbet', odds: '3.40' }, { book: 'TAB', odds: '3.35' }],
+        reason: 'bet365 is the outlier on the draw. Bigger edge, but a longer price means a smaller stake.' },
+      { id: 'b5', league: 'Serie A', kickoff: 'Mon 9 Nov 04:00', match: 'Bologna v Torino', market: 'Match result', pick: 'Bologna', book: 'Neds', odds: '2.05', fair: '1.98', fairProb: '50.6%', model: '49.7% · disagrees', agrees: false, edge: '+3.7%', stakeNum: 19, stake: '$19', stakeNote: '¼ Kelly · 0.9% of bank', minOdds: '2.02', expires: '52 min',
+        others: [{ book: 'Ladbrokes', odds: '2.05' }, { book: 'bet365', odds: '2.00' }, { book: 'Sportsbet', odds: '1.97' }, { book: 'TAB', odds: '1.95' }],
+        reason: 'Small edge, and the shadow model rates Bologna below the market. A reasonable one to skip.' }
+    ];
+  }
+
+  renderVals() {
+    const st = this.state.status || {};
+    const lg = this.state.league || 'All';
+    const all = this.data();
+    const setStatus = (id, s) => this.setState((prev) => {
+      const next = { ...(prev.status || {}) };
+      if (s) { next[id] = s; } else { delete next[id]; }
+      return { status: next };
+    });
+    const names = ['All', 'EPL', 'La Liga', 'Serie A', 'Bundesliga', 'Ligue 1'];
+    const leagues = names.map((n) => ({
+      label: n,
+      count: n === 'All' ? all.length : all.filter((b) => b.league === n).length,
+      active: n === lg,
+      inactive: n !== lg,
+      pick: () => this.setState({ league: n })
+    }));
+    const bets = all.filter((b) => lg === 'All' || b.league === lg).map((b) => {
+      const s = st[b.id] || 'pending';
+      return {
+        ...b,
+        modelColor: b.agrees ? '#E8EDF3' : '#FFA466',
+        isPending: s === 'pending',
+        isPlaced: s === 'placed',
+        isSkipped: s === 'skipped',
+        place: () => setStatus(b.id, 'placed'),
+        skip: () => setStatus(b.id, 'skipped'),
+        undo: () => setStatus(b.id, null)
+      };
+    });
+    let placed = 0; let queued = 0; let placedCount = 0; let skippedCount = 0; let pendingCount = 0;
+    all.forEach((b) => {
+      const s = st[b.id] || 'pending';
+      if (s === 'placed') { placed += b.stakeNum; placedCount += 1; }
+      else if (s === 'skipped') { skippedCount += 1; }
+      else { queued += b.stakeNum; pendingCount += 1; }
+    });
+    const limit = 175;
+    const pct = (v) => Math.min(100, (v / limit) * 100).toFixed(1) + '%';
+    return {
+      leagues,
+      bets,
+      noBets: bets.length === 0,
+      pendingCount,
+      placedCount,
+      skippedCount,
+      placedPct: pct(placed),
+      queuedPct: pct(queued),
+      placedLabel: '$' + placed,
+      queuedLabel: '$' + queued,
+      exposureLabel: '$' + (placed + queued) + ' / $' + limit
+    };
+  }
+}
+</script>
+</body>
+</html>

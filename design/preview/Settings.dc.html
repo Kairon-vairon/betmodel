@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Settings and limits</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button,select{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 232px; background: #11161D; border-right: 1px solid #222A35; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 36px; height: 36px; border-radius: 10px; background: #C6F36B; color: #0E1116; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L12 5l8 13"></path><path d="M8.5 13h7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">Edgewise</span>
+<span style="font-size: 12px; color: #8994A3">Value finder · Phase 1</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Dashboard</a>
+<a href="ValueBets.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg><span style="flex: 1">Value bets</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #C6F36B; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span></a>
+<a href="BetLog.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Model &amp; performance</a>
+<a href="Settings.dc.html" aria-current="page" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; background: #1B232D; color: #E8EDF3; text-decoration: none; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Settings &amp; limits</a>
+<span style="flex: 1 1 100%; padding: 14px 12px 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Claude</span>
+<a href="Analyst.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"></path><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z"></path></svg>Claude analyst</a>
+<a href="Lab.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><path d="M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"></path><path d="M7.5 15h9"></path></svg><span style="flex: 1">Lab &amp; releases</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #B9A3FF; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></a>
+</div>
+<div style="margin-top: auto; background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Data feeds</span>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Betfair prices · live</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Bookmaker odds · 5 min</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Results · auto-settle on</div>
+<div style="border-top: 1px solid #232C38; padding-top: 10px; color: #8994A3">Placement: <span style="color: #E8EDF3">manual at bookmaker</span></div>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+<span style="font-size: 13px; color: #8994A3">Sample data</span>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">Settings &amp; limits</h1>
+<span style="font-size: 14px; color: #A1ACBA; line-height: 1.5">Limits are enforced in code. The system won't suggest a bet that breaks them, and a drawdown stop pauses alerts until you resume.</span>
+</div>
+<button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid rgba(255,164,102,0.5); background: rgba(255,164,102,0.08); color: #FFA466; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>Pause all alerts</button>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+<section aria-labelledby="bank-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 16px">
+<h2 id="bank-h" style="margin: 0; font-size: 17px; font-weight: 600">Bankroll &amp; staking</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 6px">
+<label for="bankroll" style="font-size: 13px; color: #A1ACBA">Bankroll</label>
+<input id="bankroll" type="text" inputmode="decimal" placeholder="$2,186.90" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Mono', monospace; font-size: 15px">
+<span style="font-size: 12px; color: #8994A3">Updates automatically as bets settle</span>
+</div>
+<div style="flex: 1 1 180px; display: flex; flex-direction: column; gap: 6px">
+<label for="staking" style="font-size: 13px; color: #A1ACBA">Staking method</label>
+<select id="staking" style="height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-size: 14px">
+<option>Quarter Kelly</option>
+<option>Half Kelly</option>
+<option>Flat 1% of bankroll</option>
+<option>Flat amount</option>
+</select>
+<span style="font-size: 12px; color: #8994A3">Rounded to the nearest $1</span>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="risk-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 6px"><h2 id="risk-h" style="margin: 0; font-size: 17px; font-weight: 600">Risk limits</h2></div>
+<sc-for list="{{limits}}" as="l" hint-placeholder-count="6">
+<div style="display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-top: 1px solid #222A35">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 500">{{l.label}}</span>
+<span style="font-size: 12px; color: #8994A3">{{l.help}}</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; text-align: right">{{l.value}}</span>
+<button type="button" aria-label="Edit {{l.label}}" style="flex: none; width: 44px; height: 44px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #A1ACBA; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"></path></svg>
+</button>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="scope-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="scope-h" style="margin: 0; font-size: 17px; font-weight: 600">Leagues &amp; markets</h2>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; color: #A1ACBA">Leagues scanned</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{leagues}}" as="g" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{g.on}}" style="min-height: 40px; padding: 0 14px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; border: 1px solid {{g.border}}; background: {{g.bg}}; color: {{g.fg}}">{{g.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; color: #A1ACBA">Markets</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{markets}}" as="g" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{g.on}}" style="min-height: 40px; padding: 0 14px; border-radius: 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px; border: 1px solid {{g.border}}; background: {{g.bg}}; color: {{g.fg}}">{{g.label}}</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+</div>
+
+<div style="flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+
+<section aria-labelledby="books-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 6px; display: flex; flex-direction: column; gap: 4px">
+<h2 id="books-h" style="margin: 0; font-size: 17px; font-weight: 600">Bookmaker accounts</h2>
+<span style="font-size: 13px; color: #8994A3">Australian-licensed bookmakers only. Record limits here and stakes are capped for you.</span>
+</div>
+<sc-for list="{{books}}" as="b" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-top: 1px solid #222A35">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 600">{{b.name}}</span>
+<span style="font-size: 12px; color: #8994A3">{{b.detail}}</span>
+</div>
+<span style="padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{b.fg}}; background: {{b.bg}}">{{b.status}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="conn-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 6px"><h2 id="conn-h" style="margin: 0; font-size: 17px; font-weight: 600">Data connections</h2></div>
+<sc-for list="{{connections}}" as="c" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-top: 1px solid #222A35">
+<span style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 500">{{c.name}}</span>
+<span style="font-size: 12px; color: #8994A3">{{c.detail}}</span>
+</div>
+<span style="font-size: 12px; color: #C9D2DD">{{c.status}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="alert-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 6px"><h2 id="alert-h" style="margin: 0; font-size: 17px; font-weight: 600">Alerts</h2></div>
+<sc-for list="{{alerts}}" as="t" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; padding: 6px 12px 6px 20px; border-top: 1px solid #222A35">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding: 6px 0">
+<span style="font-size: 14px; font-weight: 500">{{t.label}}</span>
+<span style="font-size: 12px; color: #8994A3">{{t.help}}</span>
+</div>
+<button type="button" aria-pressed="{{t.on}}" aria-label="{{t.label}}" style="flex: none; width: 56px; height: 44px; border: none; background: transparent; padding: 0; display: flex; align-items: center; justify-content: center">
+<span style="width: 44px; height: 26px; border-radius: 13px; padding: 3px; display: flex; background: {{t.track}}; justify-content: {{t.justify}}"><span style="width: 20px; height: 20px; border-radius: 10px; background: {{t.knob}}"></span></span>
+</button>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="ex-h" style="background: #151B23; border: 1px dashed #3A4452; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<h2 id="ex-h" style="margin: 0; font-size: 17px; font-weight: 600">Exchange mode</h2>
+<span style="padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #A1ACBA; background: #1E2632; display: flex; align-items: center; gap: 6px"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Locked</span>
+</div>
+<span style="font-size: 14px; color: #C9D2DD; line-height: 1.5">Places approved bets on Betfair through its API. Each bet still waits for your tap, and the price is re-checked before it goes through.</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #A1ACBA">Unlocks at 300 settled bets with CLV above +1%</span><span style="font-family: 'IBM Plex Mono', monospace">268 / 300</span></div>
+<div style="height: 6px; border-radius: 3px; background: #222A35"><div style="width: 89%; height: 6px; border-radius: 3px; background: #6CC4FF"></div></div>
+</div>
+<span style="font-size: 12px; color: #8994A3">Paper trading on the exchange starts automatically at 250 bets: active.</span>
+</section>
+
+<section aria-labelledby="rg-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<h2 id="rg-h" style="margin: 0; font-size: 17px; font-weight: 600">Staying in control</h2>
+<span style="font-size: 14px; color: #C9D2DD; line-height: 1.5">Set deposit limits inside each bookmaker account. If betting stops feeling like an experiment, BetStop, the national self-exclusion register, covers every licensed Australian bookmaker in one step.</span>
+<span style="font-size: 14px; color: #C9D2DD">Gambling Help Online · <span style="font-family: 'IBM Plex Mono', monospace">1800 858 858</span></span>
+</section>
+
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1420}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const chip = (on) => on
+      ? { border: '#C6F36B', bg: 'rgba(198,243,107,0.12)', fg: '#E8EDF3' }
+      : { border: '#2C3644', bg: 'transparent', fg: '#8994A3' };
+    const sw = (on) => on
+      ? { track: '#C6F36B', knob: '#0E1116', justify: 'flex-end' }
+      : { track: '#2C3644', knob: '#8994A3', justify: 'flex-start' };
+    const leagues = [
+      { label: 'Premier League', on: true }, { label: 'La Liga', on: true }, { label: 'Serie A', on: true },
+      { label: 'Bundesliga', on: true }, { label: 'Ligue 1', on: true }
+    ].map((g) => ({ ...g, ...chip(g.on) }));
+    const markets = [
+      { label: 'Match result', on: true }, { label: 'Total goals 2.5', on: true }, { label: 'Both teams to score', on: true },
+      { label: 'Asian handicap', on: true }, { label: 'Draw no bet', on: true }, { label: 'Correct score', on: false }, { label: 'Player props', on: false }
+    ].map((g) => ({ ...g, ...chip(g.on) }));
+    const alerts = [
+      { label: 'Telegram', help: 'New value bets with Placed / Skip buttons', on: true },
+      { label: 'Push notifications', help: 'Phone and desktop app', on: true },
+      { label: 'Daily results summary', help: 'Every morning at 09:00', on: true },
+      { label: 'Quiet hours', help: 'No alerts 23:00 – 07:00 except kick-off within 2 h', on: false }
+    ].map((t) => ({ ...t, ...sw(t.on) }));
+    return {
+      limits: [
+        { label: 'Max stake per bet', help: 'Percent of current bankroll', value: '2.0% · $43' },
+        { label: 'Max daily exposure', help: 'Placed plus queued stakes', value: '8.0% · $175' },
+        { label: 'Drawdown stop', help: 'Pauses alerts when bankroll falls this far from peak', value: '−15%' },
+        { label: 'Minimum edge', help: 'After bookmaker margin, vs Betfair fair price', value: '3.0%' },
+        { label: 'Odds range', help: 'Ignore very short or very long prices', value: '1.50 – 6.00' },
+        { label: 'Approval window', help: 'Alert expires after this, or when odds fall below minimum', value: '60 min' }
+      ],
+      leagues,
+      markets,
+      books: [
+        { name: 'Sportsbet', detail: 'No limits recorded · 92 bets', status: 'Active', fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)' },
+        { name: 'TAB', detail: 'No limits recorded · 71 bets', status: 'Active', fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)' },
+        { name: 'Neds', detail: 'No limits recorded · 44 bets', status: 'Active', fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)' },
+        { name: 'bet365', detail: 'No limits recorded · 38 bets', status: 'Active', fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)' },
+        { name: 'Ladbrokes', detail: 'Max $15 per bet since 29 Oct · 24 bets', status: 'Limited', fg: '#FFA466', bg: 'rgba(255,164,102,0.12)' }
+      ],
+      connections: [
+        { name: 'Betfair Exchange API', detail: 'Read-only · fair prices and closing lines', status: 'Connected' },
+        { name: 'Bookmaker odds feed', detail: 'All 5 bookmakers · scans every 5 min', status: 'Connected' },
+        { name: 'Results feed', detail: 'Final scores for auto-settlement · every 15 min', status: 'Connected' }
+      ],
+      alerts
+    };
+  }
+}
+</script>
+</body>
+</html>

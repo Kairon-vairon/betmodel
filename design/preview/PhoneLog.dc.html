@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Bet log (phone)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+
+<header style="display: flex; flex-direction: column; gap: 12px; padding: 18px 16px 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h1 style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">Bet log</h1>
+<button type="button" aria-label="Search bets" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #232C38; background: #151B23; color: #E8EDF3; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M20 20l-4-4"></path></svg>
+</button>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #8994A3">Profit</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600; color: #6CC4FF">+$186.90</span></div>
+<div style="background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #8994A3">Record</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600">142–119–7</span></div>
+<div style="background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 11px; color: #8994A3">CLV</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600; color: #6CC4FF">+2.4%</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; background: rgba(108,196,255,0.08); border: 1px solid rgba(108,196,255,0.25); font-size: 12px; color: #C9D2DD">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6CC4FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path></svg>
+<span>Auto-settle on · last graded Mon 08:52</span>
+</div>
+<div role="group" aria-label="Filter by status" style="display: flex; gap: 6px; overflow-x: auto">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="5">
+<sc-if value="{{t.active}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{t.pick}}" style="flex: none; min-height: 38px; padding: 0 12px; border-radius: 19px; border: 1px solid #C6F36B; background: #C6F36B; color: #0E1116; font-size: 13px; font-weight: 600">{{t.label}}</button>
+</sc-if>
+<sc-if value="{{t.inactive}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{t.pick}}" style="flex: none; min-height: 38px; padding: 0 12px; border-radius: 19px; border: 1px solid #2C3644; background: transparent; color: #C9D2DD; font-size: 13px; font-weight: 500">{{t.label}}</button>
+</sc-if>
+</sc-for>
+</div>
+</header>
+
+<div style="flex: 1; overflow-y: auto; padding: 4px 16px 20px; display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{noRows}}" hint-placeholder-val="{{false}}">
+<div style="padding: 28px 12px; text-align: center; color: #A1ACBA; font-size: 14px">Nothing here yet.</div>
+</sc-if>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+<article style="background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span style="font-size: 12px; color: #8994A3">{{r.league}} · {{r.kick}}</span>
+<span style="padding: 3px 9px; border-radius: 6px; font-size: 11px; font-weight: 600; color: {{r.fg}}; background: {{r.bg}}; border: 1px solid {{r.bd}}">{{r.status}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600">{{r.match}}</span>
+<span style="font-size: 13px; color: #A1ACBA">{{r.market}}</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600; color: {{r.plColor}}">{{r.pl}}</span>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: #8994A3">
+<span>{{r.book}} <span style="font-family: 'IBM Plex Mono', monospace; color: #C9D2DD">{{r.odds}}</span> · {{r.stake}}</span>
+<span>{{r.note}}</span>
+</div>
+</article>
+</sc-for>
+</div>
+
+<nav aria-label="Main" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #222A35; background: #11161D; padding: 6px 8px 18px">
+<a href="PhoneToday.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #A1ACBA; text-decoration: none; font-size: 11px; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg>Today</a>
+<a href="PhoneLog.dc.html" aria-current="page" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #C6F36B; text-decoration: none; font-size: 11px; font-weight: 600">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #A1ACBA; text-decoration: none; font-size: 11px; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Stats</a>
+<a href="Settings.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #A1ACBA; text-decoration: none; font-size: 11px; font-weight: 500">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Limits</a>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  state = { tab: 'all' };
+
+  renderVals() {
+    const tab = this.state.tab || 'all';
+    const tone = {
+      'Won': { fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)', bd: 'rgba(108,196,255,0.12)' },
+      'Lost': { fg: '#FFA466', bg: 'rgba(255,164,102,0.12)', bd: 'rgba(255,164,102,0.12)' },
+      'Void': { fg: '#A1ACBA', bg: 'rgba(161,172,186,0.12)', bd: 'rgba(161,172,186,0.12)' },
+      'Placed · open': { fg: '#B9A3FF', bg: 'rgba(185,163,255,0.14)', bd: 'rgba(185,163,255,0.14)' },
+      'Skipped': { fg: '#A1ACBA', bg: 'transparent', bd: '#3A4452' },
+      'Expired': { fg: '#8994A3', bg: 'transparent', bd: '#2C3644' }
+    };
+    const signColor = (v) => v.indexOf('+') === 0 ? '#6CC4FF' : (v.indexOf('−') === 0 ? '#FFA466' : '#A1ACBA');
+    const all = [
+      { group: 'open', league: 'Bundesliga', kick: 'Sat 7 Nov', match: 'Eintracht Frankfurt v Union Berlin', market: 'Match result · Frankfurt', book: 'TAB', odds: '1.95', stake: '$26', note: 'Awaiting kick-off', pl: '—', status: 'Placed · open' },
+      { group: 'settled', league: 'Serie A', kick: 'Mon 2 Nov', match: 'Napoli 2–1 Lazio', market: 'Match result · Napoli', book: 'TAB', odds: '1.90', stake: '$28', note: 'CLV +5.0%', pl: '+$25.20', status: 'Won' },
+      { group: 'settled', league: 'La Liga', kick: 'Mon 2 Nov', match: 'Villarreal 1–0 Betis', market: 'Over 2.5 goals', book: 'Sportsbet', odds: '1.87', stake: '$25', note: 'CLV −2.6%', pl: '−$25.00', status: 'Lost' },
+      { group: 'settled', league: 'Ligue 1', kick: 'Mon 2 Nov', match: 'Rennes 1–1 Nice', market: 'Match result · Draw', book: 'bet365', odds: '3.60', stake: '$12', note: 'CLV +9.1%', pl: '+$31.20', status: 'Won' },
+      { group: 'expired', league: 'Ligue 1', kick: 'Sun 1 Nov', match: 'Lille v Lyon', market: 'Over 2.5 goals', book: 'Sportsbet', odds: '1.88', stake: '—', note: 'Odds fell to $1.72', pl: '—', status: 'Expired' },
+      { group: 'settled', league: 'Serie A', kick: 'Sun 1 Nov', match: 'Atalanta 0–1 Fiorentina', market: 'Match result · Atalanta', book: 'Sportsbet', odds: '1.75', stake: '$24', note: 'CLV −1.7%', pl: '−$24.00', status: 'Lost' },
+      { group: 'settled', league: 'EPL', kick: 'Sun 1 Nov', match: 'Aston Villa 1–1 Newcastle', market: 'Draw no bet · Newcastle', book: 'Neds', odds: '2.10', stake: '$20', note: 'Stake returned', pl: '$0.00', status: 'Void' },
+      { group: 'skipped', league: 'EPL', kick: 'Sun 1 Nov', match: 'Crystal Palace 3–1 Bournemouth', market: 'Under 2.5 goals', book: 'TAB', odds: '2.00', stake: '($22)', note: 'Would have lost', pl: '(−$22)', status: 'Skipped' },
+      { group: 'settled', league: 'Bundesliga', kick: 'Sun 1 Nov', match: 'Stuttgart 2–2 Wolfsburg', market: 'Both teams to score · Yes', book: 'Neds', odds: '1.70', stake: '$30', note: 'CLV +2.4%', pl: '+$21.00', status: 'Won' }
+    ].map((r) => ({ ...r, ...tone[r.status], plColor: r.group === 'skipped' ? '#8994A3' : signColor(r.pl) }));
+    const defs = [
+      { id: 'all', label: 'All' },
+      { id: 'open', label: 'Open' },
+      { id: 'settled', label: 'Settled' },
+      { id: 'skipped', label: 'Skipped' },
+      { id: 'expired', label: 'Expired' }
+    ];
+    const tabs = defs.map((d) => ({ ...d, active: d.id === tab, inactive: d.id !== tab, pick: () => this.setState({ tab: d.id }) }));
+    const rows = tab === 'all' ? all : all.filter((r) => r.group === tab);
+    return { tabs, rows, noRows: rows.length === 0 };
+  }
+}
+</script>
+</body>
+</html>

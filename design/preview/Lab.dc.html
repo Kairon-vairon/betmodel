@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Lab and releases</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button{font-family:inherit;cursor:pointer}
+input::placeholder{color:#8994A3}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 232px; background: #11161D; border-right: 1px solid #222A35; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 36px; height: 36px; border-radius: 10px; background: #C6F36B; color: #0E1116; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L12 5l8 13"></path><path d="M8.5 13h7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">Edgewise</span>
+<span style="font-size: 12px; color: #8994A3">Value finder · Phase 1</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Dashboard</a>
+<a href="ValueBets.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg><span style="flex: 1">Value bets</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #C6F36B; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span></a>
+<a href="BetLog.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Model &amp; performance</a>
+<a href="Settings.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Settings &amp; limits</a>
+<span style="flex: 1 1 100%; padding: 14px 12px 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Claude</span>
+<a href="Analyst.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"></path><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z"></path></svg>Claude analyst</a>
+<a href="Lab.dc.html" aria-current="page" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; background: #1B232D; color: #E8EDF3; text-decoration: none; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><path d="M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"></path><path d="M7.5 15h9"></path></svg><span style="flex: 1">Lab &amp; releases</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #B9A3FF; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></a>
+</div>
+<div style="margin-top: auto; background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Data feeds</span>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Betfair prices · live</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Bookmaker odds · 5 min</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Results · auto-settle on</div>
+<div style="border-top: 1px solid #232C38; padding-top: 10px; color: #8994A3">Placement: <span style="color: #E8EDF3">manual at bookmaker</span></div>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 680px">
+<span style="font-size: 13px; color: #8994A3">Claude's version · Sample data</span>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">Lab &amp; releases</h1>
+<span style="font-size: 14px; color: #A1ACBA; line-height: 1.5">Claude works on a separate copy of the software, using a read-only copy of your data. Changes only reach your live version when you upgrade, and you can always roll back.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: #A1ACBA">Next lab session Mon 9 Nov, 04:00 · weekly</span>
+<button type="button" style="height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #2C3644; background: #151B23; color: #E8EDF3; font-size: 14px; font-weight: 500">Run a session now</button>
+</div>
+</header>
+
+<section aria-label="Versions" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch">
+<div style="flex: 1 1 300px; background: #151B23; border: 1px solid #3A4A1F; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<span style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600">Live · your version</span>
+<span style="padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; background: #C6F36B; color: #0E1116">Running</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600">{{liveVersion}}</span>
+<span style="font-size: 13px; color: #A1ACBA">{{liveNote}}</span>
+<span style="font-size: 13px; color: #C9D2DD">Finds bets, sends alerts, tracks your real bankroll</span>
+</div>
+<div style="flex: 0 1 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; text-align: center">
+<svg aria-hidden="true" width="120" height="24" viewBox="0 0 120 24" fill="none" stroke="#6CC4FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h108"></path><path d="M104 5l8 7-8 7"></path></svg>
+<span style="font-size: 13px; font-weight: 600; color: #6CC4FF">Read-only data copy</span>
+<span style="font-size: 12px; color: #8994A3; line-height: 1.45">Nightly at 03:00 · 431 bets · 18,204 price snapshots · credentials never copied</span>
+</div>
+<div style="flex: 1 1 300px; background: #151B23; border: 1px solid rgba(185,163,255,0.4); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 10px">
+<span style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600">Lab · Claude's version</span>
+<span style="padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; background: rgba(185,163,255,0.16); color: #B9A3FF">{{labBadge}}</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 28px; font-weight: 600">{{labVersion}}</span>
+<span style="font-size: 13px; color: #A1ACBA">Last session Mon 2 Nov, 04:00 · 3 experiments running</span>
+<span style="font-size: 13px; color: #C9D2DD">Can't send alerts, touch your bankroll, or see logins</span>
+</div>
+</section>
+
+<section aria-labelledby="rel-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 20px 22px 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px">
+<span style="font-size: 12px; color: #B9A3FF; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase">Release proposal · written by Claude</span>
+<h2 id="rel-h" style="margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em">v1.3 · Lineup tracker and tighter draw rules</h2>
+<p style="margin: 0; font-size: 15px; color: #C9D2DD; line-height: 1.55">Re-checks prices within 2 minutes of official lineups, raises the minimum edge on draws to 4%, drops Ligue 1 totals, and fixes a settlement bug on quarter-goal Asian handicaps. Over the same 6 weeks, it found 23 more value bets than your live version with better closing line value.</p>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; background: rgba(108,196,255,0.08); border: 1px solid rgba(108,196,255,0.28)">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6CC4FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"></path><path d="M9 12l2 2 4-4"></path></svg>
+<span style="font-size: 13px; color: #E8EDF3">No high-risk changes · stake sizing and limits untouched</span>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; border-top: 1px solid #222A35">
+<div style="flex: 1 1 420px; min-width: 0; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid #222A35">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600; color: #A1ACBA">Same 6 weeks, side by side · 22 Sep – 2 Nov</h3>
+<div style="display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr)); gap: 0 12px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600; padding-bottom: 6px; border-bottom: 1px solid #222A35">
+<span>Measure</span><span style="text-align: right">Live v1.2</span><span style="text-align: right">Lab v1.3</span>
+</div>
+<sc-for list="{{compare}}" as="c" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr)); gap: 0 12px; font-size: 14px; align-items: center">
+<span style="color: #C9D2DD">{{c.label}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #A1ACBA">{{c.live}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: {{c.color}}">{{c.lab}}</span>
+</div>
+</sc-for>
+<span style="font-size: 12px; color: #8994A3; line-height: 1.5">Simulated ROI is from shadow bets, not real money. Closing line value is the more reliable signal at this sample size.</span>
+</div>
+<div style="flex: 1 1 360px; min-width: 0; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 14px; font-weight: 600; color: #A1ACBA">Checks passed</h3>
+<sc-for list="{{checks}}" as="k" hint-placeholder-count="4">
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px">{{k.label}}</span><span style="font-size: 12px; color: #8994A3">{{k.detail}}</span></div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-top: 1px solid #222A35; padding: 16px 22px 6px">
+<h3 style="margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #A1ACBA">What changes</h3>
+</div>
+<sc-for list="{{changes}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: flex-start; padding: 12px 22px; border-top: 1px solid #1C232D">
+<span style="flex: none; width: 74px; padding: 3px 0; border-radius: 6px; font-size: 12px; font-weight: 600; text-align: center; color: #C9D2DD; background: #1E2632">{{g.kind}}</span>
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 600">{{g.title}}</span>
+<span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">{{g.why}}</span>
+</div>
+<span style="flex: none; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{g.riskFg}}; background: {{g.riskBg}}">{{g.risk}}</span>
+</div>
+</sc-for>
+
+<sc-if value="{{isPending}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 16px 22px 20px; border-top: 1px solid #222A35; background: #121820">
+<button type="button" onClick="{{upgrade}}" style="height: 46px; padding: 0 22px; border-radius: 10px; border: none; background: #C6F36B; color: #0E1116; font-size: 15px; font-weight: 600">Upgrade to v1.3</button>
+<button type="button" onClick="{{reject}}" style="height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 15px; font-weight: 500">Reject</button>
+<button type="button" style="height: 46px; padding: 0 16px; border-radius: 10px; border: none; background: transparent; color: #A1ACBA; font-size: 14px; text-decoration: underline">View code changes on GitHub</button>
+<span style="margin-left: auto; font-size: 13px; color: #8994A3">Upgrading takes about a minute. Pending bets are kept.</span>
+</div>
+</sc-if>
+<sc-if value="{{isUpgraded}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 16px 22px 20px; border-top: 1px solid #222A35; background: rgba(198,243,107,0.07)">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>
+<span style="flex: 1 1 320px; font-size: 15px">v1.3 is live. v1.2 is kept, so you can go back at any time.</span>
+<button type="button" onClick="{{rollback}}" style="height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 15px; font-weight: 500">Roll back to v1.2</button>
+</div>
+</sc-if>
+<sc-if value="{{isRolledBack}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 16px 22px 20px; border-top: 1px solid #222A35; background: #121820">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6CC4FF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+<span style="flex: 1 1 320px; font-size: 15px">Back on v1.2. v1.3 returns to the lab and Claude will review what happened in the next session.</span>
+<button type="button" onClick="{{upgrade}}" style="height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 15px; font-weight: 500">Upgrade again</button>
+</div>
+</sc-if>
+<sc-if value="{{isRejected}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; padding: 16px 22px 20px; border-top: 1px solid #222A35; background: #121820">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 6px">
+<label for="reject-why" style="font-size: 13px; color: #C9D2DD">Rejected. Tell Claude why, and the next session will take it into account.</label>
+<input id="reject-why" type="text" placeholder="e.g. I want to keep betting Ligue 1 totals for now" style="height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-size: 14px">
+</div>
+<button type="button" onClick="{{reset}}" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 14px">Undo</button>
+</div>
+</sc-if>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="exp-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 10px; display: flex; flex-direction: column; gap: 4px">
+<h2 id="exp-h" style="margin: 0; font-size: 17px; font-weight: 600">Experiments in the lab</h2>
+<span style="font-size: 13px; color: #8994A3">Not in any release yet</span>
+</div>
+<sc-for list="{{experiments}}" as="e" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 20px; border-top: 1px solid #222A35">
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 14px; font-weight: 600">{{e.name}}</span>
+<span style="font-size: 13px; color: #A1ACBA; line-height: 1.45">{{e.detail}}</span>
+</div>
+<span style="flex: none; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{e.fg}}; background: {{e.bg}}">{{e.stage}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="nb-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 10px; display: flex; flex-direction: column; gap: 4px">
+<h2 id="nb-h" style="margin: 0; font-size: 17px; font-weight: 600">Lab notebook</h2>
+<span style="font-size: 13px; color: #8994A3">Claude reads this at the start of every session, so work builds week to week</span>
+</div>
+<sc-for list="{{notebook}}" as="n" hint-placeholder-count="4">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 12px 20px; border-top: 1px solid #222A35">
+<span style="flex: none; width: 64px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8994A3; padding-top: 2px">{{n.date}}</span>
+<span style="flex: 1; font-size: 14px; color: #C9D2DD; line-height: 1.5">{{n.text}}</span>
+</div>
+</sc-for>
+</section>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="hist-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 10px"><h2 id="hist-h" style="margin: 0; font-size: 17px; font-weight: 600">Release history</h2></div>
+<sc-for list="{{history}}" as="h" hint-placeholder-count="4">
+<div style="display: flex; gap: 14px; align-items: center; padding: 12px 20px; border-top: 1px solid #222A35">
+<span style="flex: none; width: 48px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600">{{h.v}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px">{{h.title}}</span>
+<span style="font-size: 12px; color: #8994A3">{{h.date}}</span>
+</div>
+<span style="flex: none; padding: 3px 9px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{h.fg}}; background: {{h.bg}}">{{h.status}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="guard-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 id="guard-h" style="margin: 0; font-size: 17px; font-weight: 600">Lab rules</h2>
+<sc-for list="{{rules}}" as="r" hint-placeholder-count="5">
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD; line-height: 1.5">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6CC4FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"></path></svg>
+<span>{{r.text}}</span>
+</div>
+</sc-for>
+</section>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1560}}'>
+class Component extends DCLogic {
+  state = { release: 'pending' };
+
+  renderVals() {
+    const s = this.state.release || 'pending';
+    const live13 = s === 'upgraded';
+    const risk = (r) => r === 'Low risk'
+      ? { riskFg: '#6CC4FF', riskBg: 'rgba(108,196,255,0.12)' }
+      : { riskFg: '#FFA466', riskBg: 'rgba(255,164,102,0.12)' };
+    const v13 = {
+      pending: { status: 'Awaiting review', fg: '#B9A3FF', bg: 'rgba(185,163,255,0.14)' },
+      upgraded: { status: 'Live', fg: '#0E1116', bg: '#C6F36B' },
+      rolledback: { status: 'Rolled back', fg: '#FFA466', bg: 'rgba(255,164,102,0.12)' },
+      rejected: { status: 'Rejected', fg: '#A1ACBA', bg: '#1E2632' }
+    }[s];
+    const prev = { status: 'Previous', fg: '#A1ACBA', bg: '#1E2632' };
+    const liveTag = { status: 'Live', fg: '#0E1116', bg: '#C6F36B' };
+    return {
+      isPending: s === 'pending',
+      isUpgraded: s === 'upgraded',
+      isRolledBack: s === 'rolledback',
+      isRejected: s === 'rejected',
+      upgrade: () => this.setState({ release: 'upgraded' }),
+      reject: () => this.setState({ release: 'rejected' }),
+      rollback: () => this.setState({ release: 'rolledback' }),
+      reset: () => this.setState({ release: 'pending' }),
+      liveVersion: live13 ? 'v1.3' : 'v1.2',
+      liveNote: live13 ? 'Upgraded just now · v1.2 kept for rollback' : 'Installed 20 Oct · reference-price strategy',
+      labVersion: live13 ? 'v1.4-lab' : 'v1.3',
+      labBadge: live13 ? 'New cycle' : 'Ready for review',
+      compare: [
+        { label: 'Value bets found', live: '112', lab: '135', color: '#6CC4FF' },
+        { label: 'Avg closing line value', live: '+2.3%', lab: '+2.9%', color: '#6CC4FF' },
+        { label: 'Beat the close', live: '62%', lab: '66%', color: '#6CC4FF' },
+        { label: 'Simulated ROI', live: '+3.0%', lab: '+4.1%', color: '#6CC4FF' },
+        { label: 'Avg stake suggested', live: '$24', lab: '$24', color: '#E8EDF3' }
+      ],
+      checks: [
+        { label: 'Walk-forward backtest', detail: '2 past seasons, never seen in training' },
+        { label: 'Shadow run on live prices', detail: '6 weeks · 135 signals logged' },
+        { label: 'Automated tests', detail: '214 passed · 0 failed' },
+        { label: 'Settlement replay', detail: 'All 268 settled bets re-graded · 2 corrected' }
+      ],
+      changes: [
+        { kind: 'New', title: 'Lineup tracker', why: 'Re-checks every affected price within 2 minutes of official lineups. Bookmakers lagged Betfair by 6–9 minutes after team news in the lab data.', risk: 'Low risk' },
+        { kind: 'Changed', title: 'Minimum edge on draws: 3% → 4%', why: 'Draw bets between 3% and 4% edge had negative closing line value (−0.6% over 58 bets).', risk: 'Medium risk' },
+        { kind: 'Removed', title: 'Ligue 1 total goals market', why: 'Closing line value of −0.8% over 41 bets. Prices there are sharper than the model can beat.', risk: 'Low risk' },
+        { kind: 'Fixed', title: 'Quarter-goal Asian handicap settlement', why: 'Half-win results were graded as full wins. 2 past bets corrected, −$3.40 to your recorded profit.', risk: 'Low risk' }
+      ].map((g) => ({ ...g, ...risk(g.risk) })),
+      experiments: [
+        { name: 'Earlier-week price capture', detail: 'Bet Tue–Thu when lines open. +3.4% CLV across 2 backtested seasons, and it avoids the overnight kick-off problem.', stage: 'Promising', fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)' },
+        { name: 'Poisson goals model v0.2', detail: 'Shadow model for totals and both-teams-to-score. +1.8% CLV over 61 signals so far.', stage: 'Shadow', fg: '#B9A3FF', bg: 'rgba(185,163,255,0.14)' },
+        { name: 'Bookmaker-specific margins', detail: 'Learn how each bookmaker shades prices by market. Queued for next session.', stage: 'Queued', fg: '#A1ACBA', bg: '#1E2632' }
+      ],
+      notebook: [
+        { date: '2 Nov', text: 'Draws below 4% edge: CLV −0.6% over 58 bets. Raised threshold in v1.3. Re-check after 100 more draw signals.' },
+        { date: '26 Oct', text: 'Ligue 1 totals losing. Checked for a data problem first: none, prices are just sharp. Dropped in v1.3.' },
+        { date: '19 Oct', text: 'Betfair moves about an hour before kick-off on lineup news; bookmakers lag 6–9 minutes. Building a lineup tracker.' },
+        { date: '12 Oct', text: 'Tested ½ Kelly vs ¼ Kelly as an experiment only. Much bigger swings for little gain. Not proposed.' }
+      ],
+      history: [
+        { v: 'v1.3', title: 'Lineup tracker, tighter draw rules', date: 'Proposed 2 Nov', ...v13 },
+        { v: 'v1.2', title: 'Ladbrokes limit cap, CSV export', date: 'Installed 20 Oct', ...(live13 ? prev : liveTag) },
+        { v: 'v1.1', title: 'Auto-settlement for draw no bet', date: 'Installed 28 Sep', ...prev },
+        { v: 'v1.0', title: 'First version', date: 'Installed 15 Aug', ...prev }
+      ],
+      rules: [
+        'Works on a copy of your data. It can read the live bet log, never change it.',
+        'No access to Betfair, bookmaker or alert credentials.',
+        'Can’t send alerts or place anything, even in exchange mode.',
+        'Changes to stake sizing or safety limits are always flagged high-risk and shown on their own.',
+        'Nothing reaches your live version until you tap Upgrade.'
+      ].map((text) => ({ text }))
+    };
+  }
+}
+</script>
+</body>
+</html>

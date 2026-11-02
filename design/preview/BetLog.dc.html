@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Bet log</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button,select{font-family:inherit;cursor:pointer}
+input::placeholder{color:#8994A3}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 232px; background: #11161D; border-right: 1px solid #222A35; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 36px; height: 36px; border-radius: 10px; background: #C6F36B; color: #0E1116; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L12 5l8 13"></path><path d="M8.5 13h7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">Edgewise</span>
+<span style="font-size: 12px; color: #8994A3">Value finder · Phase 1</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Dashboard</a>
+<a href="ValueBets.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg><span style="flex: 1">Value bets</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #C6F36B; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span></a>
+<a href="BetLog.dc.html" aria-current="page" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; background: #1B232D; color: #E8EDF3; text-decoration: none; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Model &amp; performance</a>
+<a href="Settings.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Settings &amp; limits</a>
+<span style="flex: 1 1 100%; padding: 14px 12px 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Claude</span>
+<a href="Analyst.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"></path><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z"></path></svg>Claude analyst</a>
+<a href="Lab.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><path d="M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"></path><path d="M7.5 15h9"></path></svg><span style="flex: 1">Lab &amp; releases</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #B9A3FF; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></a>
+</div>
+<div style="margin-top: auto; background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Data feeds</span>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Betfair prices · live</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Bookmaker odds · 5 min</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Results · auto-settle on</div>
+<div style="border-top: 1px solid #232C38; padding-top: 10px; color: #8994A3">Placement: <span style="color: #E8EDF3">manual at bookmaker</span></div>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 680px">
+<span style="font-size: 13px; color: #8994A3">Every bet the system generates · Sample data</span>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">Bet log</h1>
+<span style="font-size: 14px; color: #A1ACBA; line-height: 1.5">Placed, skipped and expired bets are all kept. When a match ends, the final score is pulled in and each bet is graded automatically, then your bankroll, stats and the model's training data update.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button type="button" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #2C3644; background: #151B23; color: #E8EDF3; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5"></path><path d="M5 20h14"></path></svg>Export CSV</button>
+</div>
+</header>
+
+<section aria-label="Auto-settlement status" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; padding: 16px 20px; border-radius: 14px; background: rgba(108,196,255,0.07); border: 1px solid rgba(108,196,255,0.28)">
+<div style="width: 40px; height: 40px; border-radius: 20px; background: rgba(108,196,255,0.14); display: flex; align-items: center; justify-content: center; flex: none">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6CC4FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"></path><path d="M21 4v5h-5"></path><path d="M9 12l2 2 4-4"></path></svg>
+</div>
+<div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 600">Auto-settle is on</span>
+<span style="font-size: 13px; color: #C9D2DD">{{syncLabel}}</span>
+</div>
+<button type="button" onClick="{{sync}}" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(108,196,255,0.4); background: transparent; color: #6CC4FF; font-size: 14px; font-weight: 600">Check results now</button>
+</section>
+
+<section aria-label="Totals" style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Generated</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">431</span>
+<span style="font-size: 12px; color: #A1ACBA">269 placed · 118 skipped · 39 expired</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Record</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">142–119–7</span>
+<span style="font-size: 12px; color: #A1ACBA">Won · lost · void</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Profit</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #6CC4FF">+$186.90</span>
+<span style="font-size: 12px; color: #A1ACBA">ROI +3.1% on $6,030</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Avg closing line value</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #6CC4FF">+2.4%</span>
+<span style="font-size: 12px; color: #A1ACBA">Beat the close 169 of 268</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Your skips</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">−$41.50</span>
+<span style="font-size: 12px; color: #A1ACBA">What skipped bets would have made</span>
+</div>
+</section>
+
+<section aria-labelledby="log-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<h2 id="log-h" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0">All bets</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #222A35">
+<div role="group" aria-label="Filter by status" style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<sc-if value="{{t.active}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-pressed="true" onClick="{{t.pick}}" style="min-height: 40px; padding: 0 12px; border-radius: 9px; border: none; background: #1E2632; color: #E8EDF3; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px">{{t.label}} <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C6F36B">{{t.count}}</span></button>
+</sc-if>
+<sc-if value="{{t.inactive}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-pressed="false" onClick="{{t.pick}}" style="min-height: 40px; padding: 0 12px; border-radius: 9px; border: none; background: transparent; color: #A1ACBA; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 8px">{{t.label}} <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8994A3">{{t.count}}</span></button>
+</sc-if>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<label for="log-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search bets</label>
+<input id="log-search" type="search" placeholder="Search team or bookmaker" style="width: 220px; height: 40px; padding: 0 12px; border-radius: 9px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-size: 13px">
+<label for="log-league" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">League</label>
+<select id="log-league" style="height: 40px; padding: 0 10px; border-radius: 9px; border: 1px solid #2C3644; background: #0E1116; color: #E8EDF3; font-size: 13px">
+<option>All leagues</option>
+<option>EPL</option>
+<option>La Liga</option>
+<option>Serie A</option>
+<option>Bundesliga</option>
+<option>Ligue 1</option>
+</select>
+</div>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 1100px">
+<div style="display: grid; grid-template-columns: 128px minmax(240px, 1fr) 96px 64px 72px 70px 62px 112px 86px 150px; gap: 0 12px; padding: 10px 20px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600; background: #121820">
+<span>Kick-off</span><span>Match · market</span><span>Bookmaker</span><span>Odds</span><span>Close</span><span>CLV</span><span>Stake</span><span>Result</span><span style="text-align: right">P/L</span><span>Status</span>
+</div>
+<sc-if value="{{noRows}}" hint-placeholder-val="{{false}}">
+<div style="padding: 28px 20px; color: #A1ACBA; font-size: 14px; border-top: 1px solid #222A35">Nothing in this view yet.</div>
+</sc-if>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+<div style="display: grid; grid-template-columns: 128px minmax(240px, 1fr) 96px 64px 72px 70px 62px 112px 86px 150px; gap: 0 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #222A35; font-size: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; color: #E8EDF3">{{r.kick}}</span><span style="font-size: 12px; color: #8994A3">{{r.league}}</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-weight: 600">{{r.match}}</span><span style="font-size: 13px; color: #A1ACBA">{{r.market}}</span></div>
+<span style="color: #C9D2DD">{{r.book}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace">{{r.odds}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; color: #A1ACBA">{{r.close}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; color: {{r.clvColor}}">{{r.clv}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace">{{r.stake}}</span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{r.result}}</span><span style="font-size: 12px; color: #8994A3">{{r.note}}</span></div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; text-align: right; color: {{r.plColor}}">{{r.pl}}</span>
+<span style="justify-self: start; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{r.fg}}; background: {{r.bg}}; border: 1px solid {{r.bd}}">{{r.status}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 20px; border-top: 1px solid #222A35; font-size: 13px; color: #8994A3">
+<span>{{showing}}</span>
+<button type="button" style="min-height: 40px; padding: 0 14px; border-radius: 9px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 13px">Load older bets</button>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="auto-h" style="flex: 1 1 420px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 id="auto-h" style="margin: 0; font-size: 17px; font-weight: 600">How a bet updates itself</h2>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 26px; height: 26px; border-radius: 13px; background: #1E2632; color: #6CC4FF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Full time detected</span><span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">The results feed is checked every 15 minutes for matches with open bets.</span></div></div>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 26px; height: 26px; border-radius: 13px; background: #1E2632; color: #6CC4FF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Graded by market rules</span><span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">Won, lost or void (e.g. draw no bet on a draw). Skipped bets are graded too, but don't touch your bankroll.</span></div></div>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 26px; height: 26px; border-radius: 13px; background: #1E2632; color: #6CC4FF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">3</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Everything recalculates</span><span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">Bankroll, P/L, ROI, closing line value and calibration update, and the stake limits rescale to the new bankroll.</span></div></div>
+<div style="display: flex; gap: 12px; align-items: flex-start"><span style="flex: none; width: 26px; height: 26px; border-radius: 13px; background: #1E2632; color: #6CC4FF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">4</span><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">The model learns</span><span style="font-size: 13px; color: #A1ACBA; line-height: 1.5">The graded bet joins the training data for the next weekly retrain. You get a summary notification.</span></div></div>
+<span style="font-size: 13px; color: #8994A3">Disagree with a grading? Open the bet and use Correct result. Overrides are marked in the log.</span>
+</section>
+
+<section aria-labelledby="act-h" style="flex: 1 1 420px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 10px"><h2 id="act-h" style="margin: 0; font-size: 17px; font-weight: 600">Settlement activity</h2></div>
+<sc-for list="{{activity}}" as="a" hint-placeholder-count="6">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 11px 20px; border-top: 1px solid #222A35">
+<span style="flex: none; width: 74px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8994A3; padding-top: 2px">{{a.when}}</span>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px">{{a.text}}</span>
+<span style="font-size: 12px; color: #8994A3">{{a.sub}}</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: {{a.color}}">{{a.pl}}</span>
+</div>
+</sc-for>
+</section>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1420}}'>
+class Component extends DCLogic {
+  state = { tab: 'all', synced: false };
+
+  rowsData() {
+    return [
+      { group: 'pending', kick: 'Mon 9 Nov 04:00', league: 'Serie A', match: 'Bologna v Torino', market: 'Match result · Bologna', book: 'Neds', odds: '2.05', close: '—', clv: '—', stake: '$19', result: 'Not started', note: 'Expires in 52 min', pl: '—', status: 'Awaiting approval' },
+      { group: 'pending', kick: 'Sun 8 Nov 07:00', league: 'La Liga', match: 'Real Sociedad v Osasuna', market: 'Under 2.5 goals', book: 'TAB', odds: '1.80', close: '—', clv: '—', stake: '$41', result: 'Not started', note: 'Expires in 22 min', pl: '—', status: 'Awaiting approval' },
+      { group: 'pending', kick: 'Sun 8 Nov 03:00', league: 'Ligue 1', match: 'Lens v Toulouse', market: 'Match result · Draw', book: 'bet365', odds: '3.70', close: '—', clv: '—', stake: '$16', result: 'Not started', note: 'Expires in 38 min', pl: '—', status: 'Awaiting approval' },
+      { group: 'pending', kick: 'Sun 8 Nov 02:00', league: 'EPL', match: 'Brighton v Everton', market: 'Match result · Brighton', book: 'Sportsbet', odds: '1.95', close: '—', clv: '—', stake: '$33', result: 'Not started', note: 'Expires in 14 min', pl: '—', status: 'Awaiting approval' },
+      { group: 'pending', kick: 'Sun 8 Nov 01:30', league: 'Bundesliga', match: 'Freiburg v Mainz', market: 'Both teams to score · Yes', book: 'Ladbrokes', odds: '1.83', close: '—', clv: '—', stake: '$15', result: 'Not started', note: 'Capped by limit', pl: '—', status: 'Awaiting approval' },
+      { group: 'open', kick: 'Sat 7 Nov 06:30', league: 'Bundesliga', match: 'Eintracht Frankfurt v Union Berlin', market: 'Match result · Frankfurt', book: 'TAB', odds: '1.95', close: '—', clv: '—', stake: '$26', result: 'Not started', note: 'Placed Sun 1 Nov', pl: '—', status: 'Placed · open' },
+      { group: 'settled', kick: 'Mon 2 Nov 06:45', league: 'Serie A', match: 'Napoli v Lazio', market: 'Match result · Napoli', book: 'TAB', odds: '1.90', close: '1.81', clv: '+5.0%', stake: '$28', result: '2–1', note: 'Auto · 08:52', pl: '+$25.20', status: 'Won' },
+      { group: 'settled', kick: 'Mon 2 Nov 03:00', league: 'La Liga', match: 'Villarreal v Betis', market: 'Over 2.5 goals', book: 'Sportsbet', odds: '1.87', close: '1.92', clv: '−2.6%', stake: '$25', result: '1–0', note: 'Auto · 04:58', pl: '−$25.00', status: 'Lost' },
+      { group: 'settled', kick: 'Mon 2 Nov 01:00', league: 'Ligue 1', match: 'Rennes v Nice', market: 'Match result · Draw', book: 'bet365', odds: '3.60', close: '3.30', clv: '+9.1%', stake: '$12', result: '1–1', note: 'Auto · 03:12', pl: '+$31.20', status: 'Won' },
+      { group: 'expired', kick: 'Sun 1 Nov 07:05', league: 'Ligue 1', match: 'Lille v Lyon', market: 'Over 2.5 goals', book: 'Sportsbet', odds: '1.88', close: '1.72', clv: '—', stake: '—', result: '—', note: 'Odds fell below $1.80', pl: '—', status: 'Expired' },
+      { group: 'settled', kick: 'Sun 1 Nov 04:00', league: 'Serie A', match: 'Atalanta v Fiorentina', market: 'Match result · Atalanta', book: 'Sportsbet', odds: '1.75', close: '1.78', clv: '−1.7%', stake: '$24', result: '0–1', note: 'Auto · 06:10', pl: '−$24.00', status: 'Lost' },
+      { group: 'settled', kick: 'Sun 1 Nov 02:00', league: 'EPL', match: 'Aston Villa v Newcastle', market: 'Draw no bet · Newcastle', book: 'Neds', odds: '2.10', close: '2.02', clv: '+4.0%', stake: '$20', result: '1–1', note: 'Stake returned', pl: '$0.00', status: 'Void' },
+      { group: 'skipped', kick: 'Sun 1 Nov 02:00', league: 'EPL', match: 'Crystal Palace v Bournemouth', market: 'Under 2.5 goals', book: 'TAB', odds: '2.00', close: '1.95', clv: '+2.6%', stake: '($22)', result: '3–1', note: 'Would have lost', pl: '(−$22.00)', status: 'Skipped' },
+      { group: 'settled', kick: 'Sun 1 Nov 01:30', league: 'Bundesliga', match: 'Stuttgart v Wolfsburg', market: 'Both teams to score · Yes', book: 'Neds', odds: '1.70', close: '1.66', clv: '+2.4%', stake: '$30', result: '2–2', note: 'Auto · 03:35', pl: '+$21.00', status: 'Won' }
+    ];
+  }
+
+  renderVals() {
+    const tab = this.state.tab || 'all';
+    const tone = {
+      'Won': { fg: '#6CC4FF', bg: 'rgba(108,196,255,0.12)', bd: 'rgba(108,196,255,0.12)' },
+      'Lost': { fg: '#FFA466', bg: 'rgba(255,164,102,0.12)', bd: 'rgba(255,164,102,0.12)' },
+      'Void': { fg: '#A1ACBA', bg: 'rgba(161,172,186,0.12)', bd: 'rgba(161,172,186,0.12)' },
+      'Awaiting approval': { fg: '#C6F36B', bg: 'rgba(198,243,107,0.12)', bd: 'rgba(198,243,107,0.12)' },
+      'Placed · open': { fg: '#B9A3FF', bg: 'rgba(185,163,255,0.14)', bd: 'rgba(185,163,255,0.14)' },
+      'Skipped': { fg: '#A1ACBA', bg: 'transparent', bd: '#3A4452' },
+      'Expired': { fg: '#8994A3', bg: 'transparent', bd: '#2C3644' }
+    };
+    const signColor = (v) => v.indexOf('+') === 0 ? '#6CC4FF' : (v.indexOf('−') === 0 ? '#FFA466' : '#A1ACBA');
+    const all = this.rowsData().map((r) => ({
+      ...r,
+      ...tone[r.status],
+      clvColor: signColor(r.clv),
+      plColor: r.group === 'skipped' ? '#8994A3' : signColor(r.pl)
+    }));
+    const defs = [
+      { id: 'all', label: 'All', count: 431 },
+      { id: 'pending', label: 'Awaiting approval', count: 5 },
+      { id: 'open', label: 'Placed · open', count: 1 },
+      { id: 'settled', label: 'Settled', count: 268 },
+      { id: 'skipped', label: 'Skipped', count: 118 },
+      { id: 'expired', label: 'Expired', count: 39 }
+    ];
+    const tabs = defs.map((d) => ({ ...d, active: d.id === tab, inactive: d.id !== tab, pick: () => this.setState({ tab: d.id }) }));
+    const rows = tab === 'all' ? all : all.filter((r) => r.group === tab);
+    const total = defs.find((d) => d.id === tab).count;
+    const activity = [
+      { when: 'Mon 08:52', text: 'Napoli 2–1 Lazio · Napoli graded Won', sub: 'TAB $1.90 · $28 · added to training data', pl: '+$25.20', color: '#6CC4FF' },
+      { when: 'Mon 04:58', text: 'Villarreal 1–0 Betis · Over 2.5 graded Lost', sub: 'Sportsbet $1.87 · $25', pl: '−$25.00', color: '#FFA466' },
+      { when: 'Mon 03:12', text: 'Rennes 1–1 Nice · Draw graded Won', sub: 'bet365 $3.60 · $12', pl: '+$31.20', color: '#6CC4FF' },
+      { when: 'Sun 06:10', text: 'Atalanta 0–1 Fiorentina · Atalanta graded Lost', sub: 'Sportsbet $1.75 · $24', pl: '−$24.00', color: '#FFA466' },
+      { when: 'Sun 04:05', text: 'Aston Villa 1–1 Newcastle · Draw no bet graded Void', sub: 'Neds $2.10 · stake returned', pl: '$0.00', color: '#A1ACBA' },
+      { when: 'Sun 04:05', text: 'Crystal Palace 3–1 Bournemouth · skipped bet would have lost', sub: 'Tracked only · bankroll unchanged', pl: '—', color: '#8994A3' },
+      { when: 'Sun 03:35', text: 'Stuttgart 2–2 Wolfsburg · BTTS Yes graded Won', sub: 'Neds $1.70 · $30', pl: '+$21.00', color: '#6CC4FF' }
+    ];
+    return {
+      tabs,
+      rows,
+      noRows: rows.length === 0,
+      showing: 'Showing ' + rows.length + ' most recent of ' + total,
+      activity,
+      syncLabel: this.state.synced
+        ? 'Checked just now · no new results. 1 open bet waits for Frankfurt v Union Berlin (Sat 7 Nov).'
+        : 'Last bet graded Mon 2 Nov 08:52 · feed checked 00:45 AEDT · 6 bets graded since Sunday',
+      sync: () => this.setState({ synced: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

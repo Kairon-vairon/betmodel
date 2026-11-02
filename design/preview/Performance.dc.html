@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Edgewise · Model and performance</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E1116}
+*{box-sizing:border-box}
+a{color:#C6F36B}a:hover{color:#E3FFAE}
+a:focus-visible,button:focus-visible{outline:2px solid #C6F36B;outline-offset:2px}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #0E1116; color: #E8EDF3; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-wrap: wrap; align-items: stretch">
+
+<nav aria-label="Main" style="flex: 1 1 232px; background: #11161D; border-right: 1px solid #222A35; padding: 24px 16px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 8px">
+<div style="width: 36px; height: 36px; border-radius: 10px; background: #C6F36B; color: #0E1116; display: flex; align-items: center; justify-content: center">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18L12 5l8 13"></path><path d="M8.5 13h7"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; letter-spacing: -0.01em">Edgewise</span>
+<span style="font-size: 12px; color: #8994A3">Value finder · Phase 1</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="Main.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Dashboard</a>
+<a href="ValueBets.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="1"></circle></svg><span style="flex: 1">Value bets</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #C6F36B; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">5</span></a>
+<a href="BetLog.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><path d="M4 6h.01M4 12h.01M4 18h.01"></path></svg>Bet log</a>
+<a href="Performance.dc.html" aria-current="page" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; background: #1B232D; color: #E8EDF3; text-decoration: none; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"></path><path d="M5 15l4-5 4 3 6-8"></path></svg>Model &amp; performance</a>
+<a href="Settings.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>Settings &amp; limits</a>
+<span style="flex: 1 1 100%; padding: 14px 12px 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Claude</span>
+<a href="Analyst.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"></path><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2-2.2-.8 2.2-.8z"></path></svg>Claude analyst</a>
+<a href="Lab.dc.html" style="flex: 1 1 180px; min-height: 44px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 10px; color: #A1ACBA; text-decoration: none; font-size: 14px; font-weight: 500">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"></path><path d="M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"></path><path d="M7.5 15h9"></path></svg><span style="flex: 1">Lab &amp; releases</span><span style="min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: #B9A3FF; color: #0E1116; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span></a>
+</div>
+<div style="margin-top: auto; background: #151B23; border: 1px solid #232C38; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+<span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8994A3; font-weight: 600">Data feeds</span>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Betfair prices · live</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Bookmaker odds · 5 min</div>
+<div style="display: flex; align-items: center; gap: 8px; color: #C9D2DD"><span style="width: 8px; height: 8px; border-radius: 50%; background: #C6F36B"></span>Results · auto-settle on</div>
+<div style="border-top: 1px solid #232C38; padding-top: 10px; color: #8994A3">Placement: <span style="color: #E8EDF3">manual at bookmaker</span></div>
+</div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 28px 32px 56px; display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 680px">
+<span style="font-size: 13px; color: #8994A3">15 Aug – 3 Nov · 268 settled bets · Sample data</span>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em">Model &amp; performance</h1>
+<span style="font-size: 14px; color: #A1ACBA; line-height: 1.5">Closing line value and calibration tell you whether the edge is real long before profit does. New models run in shadow mode until they clearly beat the live one.</span>
+</div>
+<div role="group" aria-label="Time range" style="display: flex; gap: 4px; background: #151B23; border: 1px solid #232C38; border-radius: 11px; padding: 4px">
+<button type="button" aria-pressed="false" style="min-height: 38px; padding: 0 12px; border-radius: 8px; border: none; background: transparent; color: #A1ACBA; font-size: 13px">30 days</button>
+<button type="button" aria-pressed="false" style="min-height: 38px; padding: 0 12px; border-radius: 8px; border: none; background: transparent; color: #A1ACBA; font-size: 13px">90 days</button>
+<button type="button" aria-pressed="true" style="min-height: 38px; padding: 0 12px; border-radius: 8px; border: none; background: #1E2632; color: #E8EDF3; font-size: 13px; font-weight: 600">Season</button>
+</div>
+</header>
+
+<section aria-label="Key metrics" style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">ROI</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #6CC4FF">+3.1%</span>
+<span style="font-size: 12px; color: #A1ACBA">+$186.90 on $6,030</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Avg CLV</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #6CC4FF">+2.4%</span>
+<span style="font-size: 12px; color: #A1ACBA">vs Betfair closing price</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Beat the close</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">63%</span>
+<span style="font-size: 12px; color: #A1ACBA">169 of 268 bets</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Strike rate</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">54.4%</span>
+<span style="font-size: 12px; color: #A1ACBA">142 of 261 decided</span>
+</div>
+<div style="flex: 1 1 150px; background: #151B23; border: 1px solid #232C38; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #8994A3">Max drawdown</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; color: #FFA466">−3.4%</span>
+<span style="font-size: 12px; color: #A1ACBA">From the $2,233.40 peak</span>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="cum-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 id="cum-h" style="margin: 0; font-size: 17px; font-weight: 600">Cumulative profit</h2>
+<span style="font-size: 13px; color: #8994A3">Settled bets only</span>
+</div>
+<svg role="img" aria-label="Cumulative profit across 268 settled bets: dips to minus 40 dollars early, peaks at plus 233 dollars 40, ends at plus 186 dollars 90" viewBox="0 0 800 230" style="width: 100%; height: auto; display: block">
+<line x1="40" y1="166.3" x2="780" y2="166.3" stroke="#3A4452" stroke-width="1"></line>
+<line x1="40" y1="110" x2="780" y2="110" stroke="#222A35" stroke-width="1" stroke-dasharray="3 4"></line>
+<line x1="40" y1="53.8" x2="780" y2="53.8" stroke="#222A35" stroke-width="1" stroke-dasharray="3 4"></line>
+<text x="32" y="170" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">$0</text>
+<text x="32" y="114" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">100</text>
+<text x="32" y="58" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">200</text>
+<path d="M40,166.3 L81.4,178.6 L122.8,188.8 L164.3,176.4 L205.7,159.5 L247.1,163.4 L288.5,144.9 L329.9,132.2 L371.3,138.9 L412.8,114.5 L454.2,99.9 L495.6,107.8 L537,84.1 L578.4,70.1 L619.9,35 L661.3,53.1 L702.7,69.5 L744.1,77.1 L780,61.1 L780,166.3 L40,166.3 Z" fill="#C6F36B" fill-opacity="0.08"></path>
+<polyline points="40,166.3 81.4,178.6 122.8,188.8 164.3,176.4 205.7,159.5 247.1,163.4 288.5,144.9 329.9,132.2 371.3,138.9 412.8,114.5 454.2,99.9 495.6,107.8 537,84.1 578.4,70.1 619.9,35 661.3,53.1 702.7,69.5 744.1,77.1 780,61.1" fill="none" stroke="#C6F36B" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+<circle cx="780" cy="61.1" r="4" fill="#C6F36B"></circle>
+<text x="772" y="88" text-anchor="end" font-size="12" fill="#E8EDF3" font-family="IBM Plex Mono, monospace">+$186.90</text>
+<text x="40" y="218" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">bet 1</text>
+<text x="316.1" y="218" text-anchor="middle" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">100</text>
+<text x="592.2" y="218" text-anchor="middle" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">200</text>
+<text x="780" y="218" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">268</text>
+</svg>
+</section>
+
+<section aria-labelledby="clv-h" style="flex: 1 1 460px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: baseline">
+<h2 id="clv-h" style="margin: 0; font-size: 17px; font-weight: 600">Closing line value · rolling 50 bets</h2>
+<span style="font-size: 13px; color: #8994A3">Above 0 = beating the market</span>
+</div>
+<svg role="img" aria-label="Rolling 50-bet closing line value stays between plus 1.2 and plus 3.1 percent, currently plus 2.4 percent" viewBox="0 0 800 230" style="width: 100%; height: auto; display: block">
+<rect x="40" y="146.7" width="740" height="23.3" fill="#FFA466" fill-opacity="0.06"></rect>
+<line x1="40" y1="146.7" x2="780" y2="146.7" stroke="#3A4452" stroke-width="1"></line>
+<line x1="40" y1="100" x2="780" y2="100" stroke="#222A35" stroke-width="1" stroke-dasharray="3 4"></line>
+<line x1="40" y1="53.3" x2="780" y2="53.3" stroke="#222A35" stroke-width="1" stroke-dasharray="3 4"></line>
+<text x="32" y="150.7" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">0%</text>
+<text x="32" y="104" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">+2</text>
+<text x="32" y="57.3" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">+4</text>
+<polyline points="40,118.7 107.9,104.7 175.8,86 243.7,95.3 311.6,74.3 379.5,83.7 447.3,79 515.2,93 583.1,100 651,88.3 718.9,95.3 780,90.7" fill="none" stroke="#6CC4FF" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+<circle cx="780" cy="90.7" r="4" fill="#6CC4FF"></circle>
+<text x="772" y="76" text-anchor="end" font-size="12" fill="#E8EDF3" font-family="IBM Plex Mono, monospace">+2.4%</text>
+<text x="40" y="218" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">bet 50</text>
+<text x="413.4" y="218" text-anchor="middle" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">160</text>
+<text x="780" y="218" text-anchor="end" font-size="12" fill="#8994A3" font-family="IBM Plex Mono, monospace">268</text>
+</svg>
+</section>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="cal-h" style="flex: 1 1 400px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="cal-h" style="margin: 0; font-size: 17px; font-weight: 600">Calibration</h2>
+<span style="font-size: 13px; color: #8994A3">Do bets rated 60% actually win about 60% of the time?</span>
+</div>
+<div style="display: flex; gap: 18px; font-size: 12px; color: #A1ACBA">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #4A5565"></span>Predicted</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #6CC4FF"></span>Actual</span>
+</div>
+<sc-for list="{{calibration}}" as="c" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="flex: none; width: 64px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #C9D2DD">{{c.bin}}</span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<div style="height: 8px; border-radius: 4px; background: #1E2632"><div style="width: {{c.predW}}; height: 8px; border-radius: 4px; background: #4A5565"></div></div>
+<div style="height: 8px; border-radius: 4px; background: #1E2632"><div style="width: {{c.actW}}; height: 8px; border-radius: 4px; background: #6CC4FF"></div></div>
+</div>
+<span style="flex: none; width: 92px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #A1ACBA">{{c.pred}} → {{c.act}}</span>
+<span style="flex: none; width: 46px; text-align: right; font-size: 12px; color: #8994A3">n {{c.n}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="lg-h" style="flex: 1 1 520px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="padding: 18px 20px 12px"><h2 id="lg-h" style="margin: 0; font-size: 17px; font-weight: 600">By league</h2></div>
+<div style="overflow-x: auto">
+<div style="min-width: 520px">
+<div style="display: grid; grid-template-columns: minmax(110px, 1.4fr) repeat(5, minmax(0, 1fr)); gap: 0 12px; padding: 10px 20px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600; background: #121820">
+<span>League</span><span style="text-align: right">Bets</span><span style="text-align: right">Staked</span><span style="text-align: right">P/L</span><span style="text-align: right">ROI</span><span style="text-align: right">CLV</span>
+</div>
+<sc-for list="{{leagues}}" as="l" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: minmax(110px, 1.4fr) repeat(5, minmax(0, 1fr)); gap: 0 12px; padding: 12px 20px; border-top: 1px solid #222A35; font-size: 14px; align-items: center">
+<span style="font-weight: 500">{{l.name}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace">{{l.bets}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #A1ACBA">{{l.staked}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: {{l.color}}">{{l.pl}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: {{l.color}}">{{l.roi}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #6CC4FF">{{l.clv}}</span>
+</div>
+</sc-for>
+<div style="display: grid; grid-template-columns: minmax(110px, 1.4fr) repeat(5, minmax(0, 1fr)); gap: 0 12px; padding: 12px 20px; border-top: 1px solid #2C3644; font-size: 14px; font-weight: 600; background: #121820">
+<span>All leagues</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace">268</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace">$6,030</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #6CC4FF">+$186.90</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #6CC4FF">+3.1%</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #6CC4FF">+2.4%</span>
+</div>
+</div>
+</div>
+<p style="margin: 0; padding: 12px 20px 16px; font-size: 13px; color: #A1ACBA; line-height: 1.5">Serie A is losing money despite positive CLV. With 49 bets that is most likely variance, not a broken edge. Keep watching before cutting it.</p>
+</section>
+</div>
+
+<section aria-labelledby="mv-h" style="background: #151B23; border: 1px solid #232C38; border-radius: 16px; overflow: hidden">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-end; padding: 18px 20px 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 id="mv-h" style="margin: 0; font-size: 17px; font-weight: 600">Model versions</h2>
+<span style="font-size: 13px; color: #8994A3">Shadow models log what they would bet without risking money</span>
+</div>
+<button type="button" style="height: 44px; padding: 0 16px; border-radius: 10px; border: 1px solid #2C3644; background: transparent; color: #E8EDF3; font-size: 14px; font-weight: 500">Add shadow model</button>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 960px">
+<div style="display: grid; grid-template-columns: minmax(200px, 1.6fr) 100px 90px 90px 110px 90px minmax(220px, 1.6fr); gap: 0 14px; padding: 10px 20px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #8994A3; font-weight: 600; background: #121820">
+<span>Model</span><span>Mode</span><span style="text-align: right">Signals</span><span style="text-align: right">CLV</span><span style="text-align: right">ROI</span><span style="text-align: right">Brier</span><span>Promotion check</span>
+</div>
+<sc-for list="{{models}}" as="m" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: minmax(200px, 1.6fr) 100px 90px 90px 110px 90px minmax(220px, 1.6fr); gap: 0 14px; padding: 14px 20px; border-top: 1px solid #222A35; font-size: 14px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">{{m.name}}</span><span style="font-size: 12px; color: #8994A3">{{m.desc}}</span></div>
+<span style="justify-self: start; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: {{m.modeFg}}; background: {{m.modeBg}}">{{m.mode}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace">{{m.signals}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: #6CC4FF">{{m.clv}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace; color: {{m.roiColor}}">{{m.roi}}</span>
+<span style="text-align: right; font-family: 'IBM Plex Mono', monospace">{{m.brier}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; color: #C9D2DD">{{m.check}}</span>
+<div style="height: 6px; border-radius: 3px; background: #222A35"><div style="width: {{m.progress}}; height: 6px; border-radius: 3px; background: {{m.barColor}}"></div></div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<section aria-labelledby="rules-h" style="flex: 1 1 420px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 id="rules-h" style="margin: 0; font-size: 17px; font-weight: 600">Promotion rules</h2>
+<span style="font-size: 13px; color: #A1ACBA">A shadow model replaces the live one only when all of these hold:</span>
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg>At least 300 shadow signals</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg>CLV at least 0.5 points above the live model</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg>Brier score no worse than live</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: #C9D2DD"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C6F36B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 3px"><path d="M5 12l5 5L20 7"></path></svg>Holds up in walk-forward tests on two unseen seasons</div>
+<span style="font-size: 13px; color: #8994A3">You approve every promotion. Nothing switches automatically.</span>
+</section>
+<section aria-labelledby="rt-h" style="flex: 1 1 420px; min-width: 0; background: #151B23; border: 1px solid #232C38; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px">
+<h2 id="rt-h" style="margin: 0; font-size: 17px; font-weight: 600">Retraining</h2>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #222A35"><span style="color: #A1ACBA">Schedule</span><span>Weekly · Mon 03:00 AEDT</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #222A35"><span style="color: #A1ACBA">Last run</span><span>Mon 2 Nov · 31 results added</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #222A35"><span style="color: #A1ACBA">Waiting for next run</span><span>6 bets · 52 match results</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #222A35"><span style="color: #A1ACBA">Validation</span><span>Walk-forward, 4-week windows</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 14px"><span style="color: #A1ACBA">Untouched test set</span><span>2025–26 season</span></div>
+</section>
+</div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1420}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const calibration = [
+      { bin: '<40%', pred: '32%', act: '35%', n: 40 },
+      { bin: '40–50%', pred: '45%', act: '47%', n: 70 },
+      { bin: '50–60%', pred: '55%', act: '58%', n: 86 },
+      { bin: '60–70%', pred: '64%', act: '64%', n: 44 },
+      { bin: '70%+', pred: '74%', act: '81%', n: 21 }
+    ].map((c) => ({ ...c, predW: c.pred, actW: c.act }));
+    const leagues = [
+      { name: 'Premier League', bets: 71, staked: '$1,610', pl: '+$41.20', roi: '+2.6%', clv: '+2.1%' },
+      { name: 'La Liga', bets: 52, staked: '$1,170', pl: '+$58.40', roi: '+5.0%', clv: '+2.9%' },
+      { name: 'Serie A', bets: 49, staked: '$1,090', pl: '−$12.30', roi: '−1.1%', clv: '+1.6%' },
+      { name: 'Bundesliga', bets: 47, staked: '$1,060', pl: '+$63.80', roi: '+6.0%', clv: '+3.0%' },
+      { name: 'Ligue 1', bets: 49, staked: '$1,100', pl: '+$35.80', roi: '+3.3%', clv: '+2.6%' }
+    ].map((l) => ({ ...l, color: l.pl.indexOf('−') === 0 ? '#FFA466' : '#6CC4FF' }));
+    const models = [
+      { name: 'Reference price v1', desc: 'Betfair fair price vs bookmakers', mode: 'Live', signals: 431, clv: '+2.4%', roi: '+3.1%', brier: '0.2342', check: 'Current live model since 15 Aug', progress: '100%', modeFg: '#0E1116', modeBg: '#C6F36B', roiColor: '#6CC4FF', barColor: '#C6F36B' },
+      { name: 'Blend v0.1', desc: 'Reference price + LightGBM adjustment', mode: 'Shadow', signals: 97, clv: '+2.9%', roi: '+4.4% sim', brier: '0.2335', check: 'Promising · 97 of 300 signals', progress: '32%', modeFg: '#B9A3FF', modeBg: 'rgba(185,163,255,0.14)', roiColor: '#6CC4FF', barColor: '#B9A3FF' },
+      { name: 'LightGBM v0.3', desc: 'Form, xG, rest days, lineups, market moves', mode: 'Shadow', signals: 214, clv: '+1.1%', roi: '−0.8% sim', brier: '0.2361', check: 'Not ready · CLV below live', progress: '71%', modeFg: '#B9A3FF', modeBg: 'rgba(185,163,255,0.14)', roiColor: '#FFA466', barColor: '#4A5565' }
+    ];
+    return { calibration, leagues, models };
+  }
+}
+</script>
+</body>
+</html>

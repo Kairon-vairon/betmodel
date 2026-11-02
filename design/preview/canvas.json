@@ -1,0 +1,26 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-11-02T14:02:00Z"},
+  "title": "Edgewise Betting App",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1320, "title": "Desktop · Dashboard", "expand": "fill"},
+    "ValueBets.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1420, "title": "Desktop · Value bets (approval queue)", "expand": "fill", "is_interactive": true},
+    "BetLog.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 1420, "title": "Desktop · Bet log (auto-settled)", "expand": "fill", "is_interactive": true},
+    "Performance.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 1420, "title": "Desktop · Model & performance", "expand": "fill"},
+    "Settings.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 1420, "title": "Desktop · Settings & limits", "expand": "fill"},
+    "PhoneToday.dc.html": {"x": 0, "y": 1940, "w": 390, "h": 844, "title": "Phone · Approval queue", "is_interactive": true},
+    "PhoneBet.dc.html": {"x": 470, "y": 1940, "w": 390, "h": 844, "title": "Phone · Bet detail"},
+    "PhoneLog.dc.html": {"x": 940, "y": 1940, "w": 390, "h": 844, "title": "Phone · Bet log", "is_interactive": true},
+    "Lab.dc.html": {"x": 7600, "y": 0, "w": 1440, "h": 1560, "title": "Desktop · Lab & releases (Claude's version)", "expand": "fill", "is_interactive": true},
+    "Analyst.dc.html": {"x": 9120, "y": 0, "w": 1440, "h": 1320, "title": "Desktop · Claude analyst", "expand": "fill"},
+    "PhoneUpgrade.dc.html": {"x": 1410, "y": 1940, "w": 390, "h": 844, "title": "Phone · Upgrade available", "is_interactive": true}
+  },
+  "order": ["Main.dc.html", "ValueBets.dc.html", "BetLog.dc.html", "Performance.dc.html", "Settings.dc.html", "Lab.dc.html", "Analyst.dc.html", "PhoneToday.dc.html", "PhoneBet.dc.html", "PhoneLog.dc.html", "PhoneUpgrade.dc.html"],
+  "notes": {
+    "desktop": {"x": 0, "y": -300, "text": "Desktop", "kind": "title1", "maxW": 10560},
+    "phone": {"x": 0, "y": 1640, "text": "Phone", "kind": "title1", "maxW": 1800}
+  },
+  "designSystems": []
+}
