@@ -1,0 +1,25 @@
+# Inside the web container: serve the app, forward /api to the API service.
+{
+	admin off
+}
+
+:80 {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		root * /srv
+		# Hashed build files never change: cache them for a year.
+		@immutable path /assets/*
+		header @immutable Cache-Control "public, max-age=31536000, immutable"
+		# Everything else (the page at any app address, the service worker, the manifest)
+		# must always be checked for updates.
+		@revalidate not path /assets/*
+		header @revalidate Cache-Control "no-cache"
+		try_files {path} /index.html
+		file_server
+	}
+}

@@ -1,0 +1,6 @@
+^backend/edgewise/domain/limits\.py$
+^backend/edgewise/domain/staking\.py$
+^backend/edgewise/domain/finder\.py$
+^backend/edgewise/domain/settlement\.py$
+^backend/edgewise/services/limits\.py$
+^backend/edgewise/services/portfolio\.py$

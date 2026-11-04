@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Run docker compose for one Edgewise stack.
+#
+#   infra/stack live up -d --build              start or update the live version
+#   infra/stack live ps                         what's running
+#   infra/stack live logs -f worker             follow the worker's log
+#   infra/stack live exec api edgewise create-owner
+#   infra/stack lab up -d --build               start the lab version (no public address)
+#
+# live uses .env and serves the app publicly on DOMAIN with HTTPS.
+# lab uses .env.lab, its own database, and can never send alerts or place bets.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+stack="${1:-}"
+shift || true
+
+case "$stack" in
+  live)
+    env_file=".env"
+    extra=(--profile public)
+    ;;
+  lab)
+    env_file=".env.lab"
+    extra=(-f infra/compose.lab.yml)
+    ;;
+  *)
+    echo "usage: infra/stack <live|lab> <docker compose command...>" >&2
+    exit 2
+    ;;
+esac
+
+if [[ ! -f "$env_file" ]]; then
+  echo "Missing $env_file. Copy .env.example to $env_file and fill it in (see docs/SETUP.md)." >&2
+  exit 1
+fi
+if [[ "$stack" == "lab" ]] && ! grep -Eq '^APP_ENV=lab([[:space:]]|$)' "$env_file"; then
+  echo "$env_file must contain APP_ENV=lab so the lab can never send alerts." >&2
+  exit 1
+fi
+
+export EDGEWISE_ENV_FILE="$PWD/$env_file"
+exec docker compose -p "edgewise-$stack" --env-file "$env_file" -f infra/docker-compose.yml "${extra[@]}" "$@"

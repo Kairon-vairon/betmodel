@@ -6,7 +6,12 @@ Value-betting software for soccer in the top 5 European leagues. It finds bookma
 
 ## Status
 
-Planning complete. Phase 1 (bookmaker value finder) not started yet.
+Phase 1 (bookmaker value finder) in progress.
+
+- **Built:** Milestone 1 foundations: server, database, sign-in with two-factor codes, the installable web app, Docker setup and CI. Also the core of the value finder (fair prices, edge, ¼ Kelly stakes, every safety limit) and of settlement (grading every market, profit, closing line value), with tests.
+- **Next:** Milestone 2, data ingestion: fixtures, bookmaker odds, Betfair prices and results.
+
+To run it on your server, follow [Setting up the server](docs/SETUP.md).
 
 ## Documents
 
@@ -16,11 +21,33 @@ Planning complete. Phase 1 (bookmaker value finder) not started yet.
 - [Release process](docs/RELEASE_PROCESS.md): live vs lab, upgrades, rollback
 - [Lab notebook](lab/NOTEBOOK.md): Claude's running record of experiments
 - [Design](design/README.md): UI preview
+- [Setting up the server](docs/SETUP.md): step-by-step install
 
 ## Branches
 
 - `main`: live, your version
 - `lab`: Claude's version
+
+## Code layout
+
+| Folder | What's in it |
+|---|---|
+| `backend/` | Python: API (FastAPI), worker, database models and migrations, and `edgewise/domain/`, the betting logic (no database or network, fully unit-tested) |
+| `web/` | The app you use on phone and computer (React + TypeScript, installable PWA) |
+| `infra/` | Docker Compose, Caddy (HTTPS), and `infra/stack`, which runs the live or lab version |
+| `.github/workflows/` | CI: lint, type checks and tests on every push |
+
+Run the tests locally:
+
+```bash
+cd backend && python3 -m venv .venv && .venv/bin/pip install -e '.[dev]' && .venv/bin/pytest
+```
+
+```bash
+cd web && npm ci && npm test
+```
+
+The PostgreSQL integration tests run when `TEST_DATABASE_URL` points at an empty test database (CI does this).
 
 ## Working with Claude Code
 

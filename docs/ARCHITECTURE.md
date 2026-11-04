@@ -83,3 +83,38 @@ Each feed has a freshness threshold. If prices are older than the threshold, sig
 
 - Heartbeat per worker and per feed; stale-data detector; error-rate alarms.
 - If a worker dies, it restarts; if a feed stays down, alerts pause and the owner gets one notification (not a flood).
+
+## Implementation notes (built in Milestone 1)
+
+How the code behaves today. Update this when the behaviour changes.
+
+**Fair price** (`backend/edgewise/domain/pricing.py`)
+- Per runner: midpoint of best back and best lay implied probabilities, then the multiplicative method scales them to 100%. Power and Shin methods are implemented for the lab to compare.
+- A market is not used as a reference if any runner is missing a back or lay price, or if lay is more than 5% above back (too thin to trust).
+- For two-way markets with pushes (whole and quarter Asian handicap or goal lines), the fair probability means "win, given no push". That is the right input for both edge and Kelly.
+
+**Suggestions** (`domain/finder.py`, `domain/staking.py`, `domain/limits.py`: high-risk code)
+- Edge and the stake formula are as in the brief. "Don't take below" odds are rounded **up** to the cent. Stakes are rounded to the nearest dollar, then capped. Caps are rounded **down** to the dollar, so a limit can never be exceeded.
+- Daily exposure means stake placed since midnight Sydney time, plus stake awaiting approval.
+- The drawdown stop compares the bankroll with its peak since alerts were last resumed. Only betting results count: deposits and withdrawals move the peak with them, so taking money out never triggers the stop. Once triggered, alerts stay paused until the owner resumes them, even if the bankroll recovers. Resuming restarts the peak from the current bankroll.
+- In one scan, candidates are ranked by expected profit in dollars (edge x stake), so a slightly lower price with no account limit can beat a higher price at a limited account. At most one bet per match, unless the owner allows more for that match.
+- Limits have hard bounds to catch typos (e.g. max stake per bet 0.1%–10%). If stored limits don't form a valid set, nothing is suggested.
+- Price freshness by time to kick-off (bookmaker / Betfair): over 48 h 75 / 45 min; 6–48 h 30 / 15 min; 1–6 h 15 / 5 min; under 1 h 10 / 2 min. A stale price never produces a suggestion and never keeps one alive.
+
+**Signals** (`domain/lifecycle.py`, `services/signals.py`)
+- A signal expires at the end of the 60-minute window, at kick-off, when a fresh bookmaker price falls below the minimum odds, when a fresh Betfair price shows the edge is now under 2%, or when alerts are paused.
+- "Placed" records the odds and stake the owner actually got, with warnings if the odds were below the minimum or the stake above the suggestion. A Placed or Skip tap can be undone for 10 minutes, before kick-off.
+- The database allows only one awaiting signal per selection.
+
+**Settlement** (`domain/settlement.py`: high-risk code)
+- Graded on the score after 90 minutes plus stoppage time. Quarter lines split the stake across the two neighbouring lines. Postponed, cancelled and abandoned matches are void, with a manual override.
+- CLV = odds taken x fair probability at kick-off - 1.
+
+**Data integrity**
+- `price_snapshots`, `bankroll_ledger` and `audit_log` are append-only: database triggers refuse updates, deletes and truncation.
+- All times are stored in UTC. The code refuses times without a time zone.
+
+**Sign-in**
+- Argon2id password hashing and authenticator-app codes (TOTP). Codes from the neighbouring 30 seconds are accepted, and a code can't be reused. The 2FA secret is encrypted with `APP_SECRET_KEY`.
+- Five failed attempts lock sign-in for 15 minutes.
+- Sessions live in the database, which stores only a SHA-256 hash of each token. They end after 7 days, or after 3 days unused. The cookie is `__Host-`, HttpOnly, Secure and SameSite=Strict, and cross-site requests are refused.

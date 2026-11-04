@@ -1,0 +1,7 @@
+# Lab stack additions. The lab has no public address: it is only reachable from the server
+# itself, e.g. through an SSH tunnel:  ssh -L 8081:127.0.0.1:8081 you@your-server
+# then open http://localhost:8081
+services:
+  web:
+    ports:
+      - "127.0.0.1:8081:80"

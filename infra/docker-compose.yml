@@ -1,0 +1,82 @@
+# One Edgewise stack (live or lab). Use the wrapper, which picks the env file and project:
+#   infra/stack live up -d --build
+#   infra/stack lab up -d --build
+# See docs/SETUP.md.
+
+x-backend: &backend
+  image: edgewise-backend:${EDGEWISE_VERSION:-local}
+  restart: unless-stopped
+  env_file: ${EDGEWISE_ENV_FILE:?run this through infra/stack}
+  environment:
+    DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-edgewise}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-edgewise}
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-edgewise}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in the env file}
+      POSTGRES_DB: ${POSTGRES_DB:-edgewise}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    <<: *backend
+    build: ../backend
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  worker:
+    <<: *backend
+    command: ["edgewise", "worker"]
+    depends_on:
+      api:
+        condition: service_healthy  # the api applies database migrations first
+
+  web:
+    image: edgewise-web:${EDGEWISE_VERSION:-local}
+    build: ../web
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  # Public HTTPS (live only: started with --profile public). Gets a certificate for DOMAIN
+  # from Let's Encrypt automatically.
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["public"]
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in the env file}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - web
+
+volumes:
+  db-data:
+  caddy-data:
+  caddy-config:
