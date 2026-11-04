@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import os
+import secrets
+import time
 from enum import StrEnum
 from functools import lru_cache
+from pathlib import Path
+from typing import Any
 from zoneinfo import ZoneInfo
 
 from pydantic import Field, SecretStr, model_validator
@@ -17,13 +22,40 @@ class Stack(StrEnum):
     LAB = "lab"
 
 
+def load_or_create_secret_key(path: Path) -> str:
+    """Read the secret key from `path`, creating it on first use (owner-only, 64 hex chars).
+
+    Safe when the API and worker start at the same time: only one of them creates it.
+    """
+    if not path.parent.is_dir():
+        raise ValueError(f"The folder for APP_SECRET_KEY_FILE does not exist: {path.parent}")
+    for _ in range(50):
+        try:
+            key = path.read_text().strip()
+        except FileNotFoundError:
+            try:
+                fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            except FileExistsError:
+                continue  # another process is creating it right now
+            with os.fdopen(fd, "w") as handle:
+                handle.write(secrets.token_hex(32) + "\n")
+            continue  # read back what was written
+        if key:
+            return key
+        time.sleep(0.1)  # created by another process but not written yet
+    raise ValueError(f"Could not read the secret key from {path}")
+
+
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(extra="ignore", case_sensitive=False)
+    # Empty values (e.g. "ODDS_API_KEY=" in the env file) count as not set.
+    model_config = SettingsConfigDict(extra="ignore", case_sensitive=False, env_ignore_empty=True)
 
     app_env: Stack = Stack.LIVE
-    app_secret_key: SecretStr = Field(
-        description="Long random string. Encrypts 2FA secrets. Generate with: openssl rand -hex 32"
-    )
+    # Encrypts the 2FA secret. Either give it directly (APP_SECRET_KEY, e.g. from
+    # `openssl rand -hex 32`) or point APP_SECRET_KEY_FILE at a file, which is created
+    # with a random key on first start (Docker keeps it in the app-secrets volume).
+    app_secret_key: SecretStr
+    app_secret_key_file: Path | None = None
     database_url: str = "postgresql+psycopg://edgewise:edgewise@localhost:5432/edgewise"
     # The owner's time zone: used for "today" in daily exposure and quiet hours.
     tz: str = "Australia/Sydney"
@@ -45,6 +77,19 @@ class Settings(BaseSettings):
     betfair_username: str | None = None
     betfair_password: SecretStr | None = None
     betfair_cert_path: str | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _secret_key_from_file(cls, data: Any) -> Any:
+        if isinstance(data, dict) and not data.get("app_secret_key"):
+            path = data.get("app_secret_key_file")
+            if not path:
+                raise ValueError(
+                    "Set APP_SECRET_KEY (generate one with: openssl rand -hex 32), "
+                    "or APP_SECRET_KEY_FILE to have one created automatically"
+                )
+            data = {**data, "app_secret_key": load_or_create_secret_key(Path(path))}
+        return data
 
     @model_validator(mode="after")
     def _check_secret_key(self) -> Settings:

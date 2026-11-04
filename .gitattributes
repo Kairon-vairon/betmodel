@@ -1,0 +1,6 @@
+# Keep Unix line endings everywhere, also on Windows checkouts: shell scripts, Caddyfiles
+# and Dockerfiles break with Windows line endings inside Linux containers.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.woff2 binary

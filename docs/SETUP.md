@@ -3,6 +3,8 @@
 Plain steps to get Edgewise running on your own server. You only do this once. Every
 command is copy-paste: run it, wait for it to finish, then do the next one.
 
+To run it on your own laptop instead, see [Running Edgewise on your own computer](LAPTOP.md).
+
 ## What you need first
 
 1. **A small server (VPS)** with Ubuntu 24.04 and at least 2 GB of memory. Pick a Sydney
@@ -42,19 +44,20 @@ git clone https://github.com/Kairon-vairon/betmodel.git && cd betmodel
 cp .env.example .env && nano .env
 ```
 
-Fill in these four lines (leave the rest for now):
+Fill in these lines (leave the rest for now):
 
 | Setting | What to put |
 |---|---|
-| `APP_SECRET_KEY` | Run `openssl rand -hex 32` in a second terminal and paste the result |
+| `APP_SECRET_KEY` | Optional. Leave it empty and one is created and kept on the server |
 | `OWNER_EMAIL` | Your email address: this is your sign-in name |
 | `DOMAIN` | Your web address, e.g. `edgewise.yourname.com` (no `https://`) |
 | `POSTGRES_PASSWORD` | Run `openssl rand -hex 24` and paste the result |
 
 Save with **Ctrl+O**, **Enter**, then exit with **Ctrl+X**.
 
-Keep a copy of `APP_SECRET_KEY` in your password manager. Without it, the sign-in code
-setup can't be read and you would have to set up the authenticator app again.
+If you fill in `APP_SECRET_KEY` yourself, keep a copy in your password manager. Without
+it, the sign-in code setup can't be read and you'd have to set up the authenticator app
+again (`edgewise reset-2fa`).
 
 ## 5. Start it
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Run docker compose for one Edgewise stack.
+# Run docker compose for one Edgewise stack on a server (docs/SETUP.md).
+# (On your own computer you don't need this: see docs/LAPTOP.md.)
 #
 #   infra/stack live up -d --build              start or update the live version
 #   infra/stack live ps                         what's running
@@ -18,11 +19,11 @@ shift || true
 case "$stack" in
   live)
     env_file=".env"
-    extra=(--profile public)
+    extra=(-f compose.yaml --profile public)
     ;;
   lab)
     env_file=".env.lab"
-    extra=(-f infra/compose.lab.yml)
+    extra=(-f compose.yaml -f infra/compose.lab.yml)
     ;;
   *)
     echo "usage: infra/stack <live|lab> <docker compose command...>" >&2
@@ -38,10 +39,15 @@ if [[ "$stack" == "lab" ]] && ! grep -Eq '^APP_ENV=lab([[:space:]]|$)' "$env_fil
   echo "$env_file must contain APP_ENV=lab so the lab can never send alerts." >&2
   exit 1
 fi
+if ! grep -Eq '^POSTGRES_PASSWORD=[^[:space:]#]+' "$env_file"; then
+  echo "Set POSTGRES_PASSWORD in $env_file (generate one with: openssl rand -hex 24)" >&2
+  exit 1
+fi
 if [[ "$stack" == "live" ]] && ! grep -Eq '^DOMAIN=[^[:space:]#]+' "$env_file"; then
   echo "Set DOMAIN in $env_file to the app's web address, e.g. DOMAIN=edgewise.example.com" >&2
   exit 1
 fi
 
-export EDGEWISE_ENV_FILE="$PWD/$env_file"
-exec docker compose -p "edgewise-$stack" --env-file "$env_file" -f infra/docker-compose.yml "${extra[@]}" "$@"
+# Naming the files with -f also stops compose.override.yaml (laptop settings) loading.
+export EDGEWISE_ENV_FILE="$env_file"
+exec docker compose -p "edgewise-$stack" --env-file "$env_file" "${extra[@]}" "$@"

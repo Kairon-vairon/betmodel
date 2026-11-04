@@ -110,11 +110,15 @@ How the code behaves today. Update this when the behaviour changes.
 - Graded on the score after 90 minutes plus stoppage time. Quarter lines split the stake across the two neighbouring lines. Postponed, cancelled and abandoned matches are void, with a manual override.
 - CLV = odds taken x fair probability at kick-off - 1.
 
+**Running it**
+- `docker compose up` in the repository root runs everything on one computer: no settings file needed, app at `http://localhost:8080` (bound to this computer only), plain-http cookie. Laptop settings live in `compose.override.yaml`.
+- Servers use `infra/stack live|lab`, which names its compose files explicitly (so the laptop settings never load), checks `POSTGRES_PASSWORD` and `DOMAIN`, and adds Caddy (live) or the lab port.
+
 **Data integrity**
 - `price_snapshots`, `bankroll_ledger` and `audit_log` are append-only: database triggers refuse updates, deletes and truncation.
 - All times are stored in UTC. The code refuses times without a time zone.
 
 **Sign-in**
-- Argon2id password hashing and authenticator-app codes (TOTP). Codes from the neighbouring 30 seconds are accepted, and a code can't be reused. The 2FA secret is encrypted with `APP_SECRET_KEY`.
+- Argon2id password hashing and authenticator-app codes (TOTP). Codes from the neighbouring 30 seconds are accepted, and a code can't be reused. The 2FA secret is encrypted with `APP_SECRET_KEY`. If that isn't set, a random key is created on first start in the `app-secrets` Docker volume (`APP_SECRET_KEY_FILE`, owner-only file) and reused after that.
 - Five failed attempts lock sign-in for 15 minutes.
 - Sessions live in the database, which stores only a SHA-256 hash of each token. They end after 7 days, or after 3 days unused. The cookie is `__Host-`, HttpOnly, Secure and SameSite=Strict, and cross-site requests are refused.

@@ -1,14 +1,28 @@
-# One Edgewise stack (live or lab). Use the wrapper, which picks the env file and project:
+# Edgewise services.
+#
+# On your own computer (docs/LAPTOP.md), in this folder:
+#   docker compose up -d --build        then open http://localhost:8080
+#   (compose.override.yaml is added automatically: it holds the laptop settings)
+#
+# On a server (docs/SETUP.md), always use the wrapper, which picks the env file, the
+# project, public HTTPS or the lab settings, and checks the required values:
 #   infra/stack live up -d --build
 #   infra/stack lab up -d --build
-# See docs/SETUP.md.
+
+name: edgewise
 
 x-backend: &backend
   image: edgewise-backend:${EDGEWISE_VERSION:-local}
   restart: unless-stopped
-  env_file: ${EDGEWISE_ENV_FILE:?run this through infra/stack}
+  env_file:
+    - path: ${EDGEWISE_ENV_FILE:-.env}
+      required: false  # a laptop needs no settings file; infra/stack checks servers have one
   environment:
-    DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-edgewise}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-edgewise}
+    DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-edgewise}:${POSTGRES_PASSWORD:-edgewise}@db:5432/${POSTGRES_DB:-edgewise}
+    # Used when APP_SECRET_KEY isn't set: a random key is created here on first start.
+    APP_SECRET_KEY_FILE: /var/lib/edgewise/app_secret_key
+  volumes:
+    - app-secrets:/var/lib/edgewise
 
 services:
   db:
@@ -16,7 +30,9 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-edgewise}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in the env file}
+      # The database is only reachable by the other Edgewise containers. Servers must
+      # still set their own password (infra/stack refuses to start without one).
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-edgewise}
       POSTGRES_DB: ${POSTGRES_DB:-edgewise}
     volumes:
       - db-data:/var/lib/postgresql/data
@@ -28,7 +44,7 @@ services:
 
   api:
     <<: *backend
-    build: ../backend
+    build: ./backend
     depends_on:
       db:
         condition: service_healthy
@@ -52,26 +68,25 @@ services:
 
   web:
     image: edgewise-web:${EDGEWISE_VERSION:-local}
-    build: ../web
+    build: ./web
     restart: unless-stopped
     depends_on:
       - api
 
-  # Public HTTPS (live only: started with --profile public). Gets a certificate for DOMAIN
-  # from Let's Encrypt automatically.
+  # Public HTTPS (servers only: infra/stack live adds --profile public). Gets a
+  # certificate for DOMAIN from Let's Encrypt automatically.
   caddy:
     image: caddy:2-alpine
     profiles: ["public"]
     restart: unless-stopped
     environment:
-      # Checked by infra/stack: compose would demand it even for stacks without caddy.
-      DOMAIN: ${DOMAIN:-}
+      DOMAIN: ${DOMAIN:-}  # checked by infra/stack
     ports:
       - "80:80"
       - "443:443"
       - "443:443/udp"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./infra/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
     depends_on:
@@ -79,5 +94,6 @@ services:
 
 volumes:
   db-data:
+  app-secrets:
   caddy-data:
   caddy-config:

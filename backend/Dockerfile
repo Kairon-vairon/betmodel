@@ -8,7 +8,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
-RUN useradd --create-home --uid 10001 edgewise
+RUN useradd --create-home --uid 10001 edgewise \
+    && mkdir -p /var/lib/edgewise && chown edgewise:edgewise /var/lib/edgewise
 
 COPY pyproject.toml alembic.ini ./
 COPY alembic ./alembic

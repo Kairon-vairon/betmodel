@@ -11,7 +11,7 @@ Phase 1 (bookmaker value finder) in progress.
 - **Built:** Milestone 1 foundations: server, database, sign-in with two-factor codes, the installable web app, Docker setup and CI. Also the core of the value finder (fair prices, edge, ¼ Kelly stakes, every safety limit) and of settlement (grading every market, profit, closing line value), with tests.
 - **Next:** Milestone 2, data ingestion: fixtures, bookmaker odds, Betfair prices and results.
 
-To run it on your server, follow [Setting up the server](docs/SETUP.md).
+To run it on your own computer, follow [Running Edgewise on your own computer](docs/LAPTOP.md). To run it on a server, follow [Setting up the server](docs/SETUP.md).
 
 ## Documents
 
@@ -21,7 +21,8 @@ To run it on your server, follow [Setting up the server](docs/SETUP.md).
 - [Release process](docs/RELEASE_PROCESS.md): live vs lab, upgrades, rollback
 - [Lab notebook](lab/NOTEBOOK.md): Claude's running record of experiments
 - [Design](design/README.md): UI preview
-- [Setting up the server](docs/SETUP.md): step-by-step install
+- [Running on your own computer](docs/LAPTOP.md): step-by-step, Mac and Windows
+- [Setting up the server](docs/SETUP.md): step-by-step install on a server
 
 ## Branches
 
@@ -34,7 +35,8 @@ To run it on your server, follow [Setting up the server](docs/SETUP.md).
 |---|---|
 | `backend/` | Python: API (FastAPI), worker, database models and migrations, and `edgewise/domain/`, the betting logic (no database or network, fully unit-tested) |
 | `web/` | The app you use on phone and computer (React + TypeScript, installable PWA) |
-| `infra/` | Docker Compose, Caddy (HTTPS), and `infra/stack`, which runs the live or lab version |
+| `compose.yaml` | The Docker services. `docker compose up` here runs everything on this computer (laptop settings in `compose.override.yaml`) |
+| `infra/` | Server extras: Caddy (HTTPS), the lab settings, and `infra/stack`, which runs the live or lab version on a server |
 | `.github/workflows/` | CI: lint, type checks and tests on every push |
 
 Run the tests locally:

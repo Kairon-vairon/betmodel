@@ -1,0 +1,17 @@
+# Laptop settings, added automatically by `docker compose up` in this folder
+# (docs/LAPTOP.md). Servers never load this file: infra/stack names its files itself.
+services:
+  web:
+    ports:
+      # Only this computer can open the app: http://localhost:8080
+      # (set EDGEWISE_PORT=8081 in a .env file here if 8080 is taken)
+      - "127.0.0.1:${EDGEWISE_PORT:-8080}:80"
+
+  api:
+    environment:
+      # Plain http://localhost: the sign-in cookie never leaves this computer.
+      COOKIE_SECURE: "false"
+
+  worker:
+    environment:
+      COOKIE_SECURE: "false"
