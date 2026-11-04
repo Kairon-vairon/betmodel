@@ -38,6 +38,10 @@ if [[ "$stack" == "lab" ]] && ! grep -Eq '^APP_ENV=lab([[:space:]]|$)' "$env_fil
   echo "$env_file must contain APP_ENV=lab so the lab can never send alerts." >&2
   exit 1
 fi
+if [[ "$stack" == "live" ]] && ! grep -Eq '^DOMAIN=[^[:space:]#]+' "$env_file"; then
+  echo "Set DOMAIN in $env_file to the app's web address, e.g. DOMAIN=edgewise.example.com" >&2
+  exit 1
+fi
 
 export EDGEWISE_ENV_FILE="$PWD/$env_file"
 exec docker compose -p "edgewise-$stack" --env-file "$env_file" -f infra/docker-compose.yml "${extra[@]}" "$@"

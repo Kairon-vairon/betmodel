@@ -64,7 +64,8 @@ services:
     profiles: ["public"]
     restart: unless-stopped
     environment:
-      DOMAIN: ${DOMAIN:?set DOMAIN in the env file}
+      # Checked by infra/stack: compose would demand it even for stacks without caddy.
+      DOMAIN: ${DOMAIN:-}
     ports:
       - "80:80"
       - "443:443"
