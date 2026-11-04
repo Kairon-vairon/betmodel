@@ -22,6 +22,7 @@ from edgewise.db.session import make_engine, make_session_factory, transaction
 from edgewise.domain.limits import DEFAULT_LIMITS
 from edgewise.services import limits as limits_service
 from edgewise.services import portfolio, signals
+from edgewise.worker.feeds import FeedRunner
 
 log = logging.getLogger("edgewise.worker")
 
@@ -40,10 +41,12 @@ class Worker:
         *,
         clock: Clock = _utcnow,
         name: str | None = None,
+        feeds: FeedRunner | None = None,
     ) -> None:
         self.settings = settings
         self.session_factory = session_factory
         self.clock = clock
+        self.feeds = feeds or FeedRunner.from_settings(settings, session_factory, clock=clock)
         # One worker per stack; a stable name means redeploys update the same heartbeat row.
         self.name = name or "worker"
         self.started_at = clock()
@@ -113,6 +116,15 @@ def build_scheduler(worker: Worker) -> BlockingScheduler:
         id="safety_checks",
         next_run_time=worker.clock(),
     )
+    scheduler.add_job(
+        worker.run_job,
+        "interval",
+        seconds=30,
+        args=[worker.feeds.tick],
+        name="feeds",
+        id="feeds",
+        next_run_time=worker.clock(),
+    )
     return scheduler
 
 
@@ -133,4 +145,6 @@ def run_worker() -> None:
         settings.app_env.value,
         "enabled" if settings.can_send_alerts else "DISABLED",
     )
+    for feed, on in worker.feeds.configured().items():
+        log.info("Feed %s: %s", feed, "configured" if on else "not configured (no key)")
     scheduler.start()

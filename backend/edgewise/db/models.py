@@ -92,6 +92,7 @@ class Event(Base):
         sa.CheckConstraint("(home_goals IS NULL) = (away_goals IS NULL)", name="score_complete"),
         sa.CheckConstraint("home_goals >= 0 AND away_goals >= 0", name="score_not_negative"),
         sa.Index("ix_events_status_kickoff", "status", "kickoff_at"),
+        sa.Index("ix_events_competition_kickoff", "competition_id", "kickoff_at"),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -228,6 +229,72 @@ class FairPrice(Base):
     inputs: Mapped[dict[str, Any]] = mapped_column(JSONType, default=dict)
     as_of: Mapped[datetime] = mapped_column(UTCDateTime)  # when the exchange prices were seen
     computed_at: Mapped[datetime] = _created()
+
+
+class LatestPrice(Base):
+    """The newest price for each selection, source, bookmaker and side, with when it was
+    last confirmed by the feed. Freshness checks use last_seen_at; price_snapshots keeps
+    the history, one row per change."""
+
+    __tablename__ = "latest_prices"
+    __table_args__ = (
+        sa.UniqueConstraint(
+            "selection_id", "source", "bookmaker_id", "side", postgresql_nulls_not_distinct=True
+        ),
+        sa.CheckConstraint("odds > 1", name="odds_above_one"),
+        sa.CheckConstraint(
+            "(source = 'betfair') = (bookmaker_id IS NULL)", name="bookmaker_matches_source"
+        ),
+    )
+
+    id: Mapped[int] = mapped_column(BigID, primary_key=True)
+    selection_id: Mapped[int] = mapped_column(sa.ForeignKey("selections.id", ondelete="CASCADE"))
+    source: Mapped[PriceSource] = mapped_column(str_enum(PriceSource, "latest_price_source"))
+    bookmaker_id: Mapped[int | None] = mapped_column(sa.ForeignKey("bookmakers.id"))
+    side: Mapped[PriceSide] = mapped_column(str_enum(PriceSide, "latest_price_side"))
+    odds: Mapped[Decimal] = mapped_column(Odds)
+    size: Mapped[Decimal | None] = mapped_column(sa.Numeric(14, 2))
+    price_time: Mapped[datetime | None] = mapped_column(UTCDateTime)  # the feed's own stamp
+    first_seen_at: Mapped[datetime] = mapped_column(UTCDateTime)  # this price since
+    last_seen_at: Mapped[datetime] = mapped_column(UTCDateTime)  # last confirmed current
+
+
+class LatestFairPrice(Base):
+    """The current fair probability for a selection and when it was last confirmed."""
+
+    __tablename__ = "latest_fair_prices"
+    __table_args__ = (
+        sa.CheckConstraint("fair_prob > 0 AND fair_prob < 1", name="probability_range"),
+    )
+
+    selection_id: Mapped[int] = mapped_column(
+        sa.ForeignKey("selections.id", ondelete="CASCADE"), primary_key=True
+    )
+    fair_prob: Mapped[float] = mapped_column(Probability)
+    method: Mapped[str] = mapped_column(sa.String(32))
+    mid_overround: Mapped[float] = mapped_column(Probability)
+    fair_price_id: Mapped[int] = mapped_column(sa.ForeignKey("fair_prices.id"))
+    changed_at: Mapped[datetime] = mapped_column(UTCDateTime)  # this value since
+    as_of: Mapped[datetime] = mapped_column(UTCDateTime)  # last confirmed by the exchange
+
+
+class ExchangeMarket(Base):
+    """A Betfair market linked to an Edgewise match, with what is needed to read it."""
+
+    __tablename__ = "exchange_markets"
+    __table_args__ = (sa.Index("ix_exchange_markets_event", "event_id"),)
+
+    betfair_market_id: Mapped[str] = mapped_column(sa.String(32), primary_key=True)
+    event_id: Mapped[int] = mapped_column(sa.ForeignKey("events.id", ondelete="CASCADE"))
+    market_type: Mapped[str] = mapped_column(sa.String(32))  # Betfair code, e.g. MATCH_ODDS
+    event_name: Mapped[str] = mapped_column(sa.String(200))  # "Home v Away" as Betfair has it
+    start_time: Mapped[datetime] = mapped_column(UTCDateTime)
+    runners: Mapped[list[dict[str, Any]]] = mapped_column(JSONType, default=list)
+    status: Mapped[str | None] = mapped_column(sa.String(16))
+    total_matched: Mapped[Decimal | None] = mapped_column(sa.Numeric(16, 2))
+    is_delayed: Mapped[bool] = mapped_column(default=False, server_default=sa.false())
+    last_catalogue_at: Mapped[datetime] = mapped_column(UTCDateTime)
+    last_book_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
 
 
 # --- Signals, bets, settlement ------------------------------------------------------------
@@ -498,6 +565,26 @@ class FeedStatus(Base):
     paused: Mapped[bool] = mapped_column(default=False, server_default=sa.false())
     paused_since: Mapped[datetime | None] = mapped_column(UTCDateTime)
     owner_notified_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
+    # e.g. remaining request allowance, matches that couldn't be matched
+    details: Mapped[dict[str, Any]] = mapped_column(
+        JSONType, default=dict, server_default=sa.text("'{}'")
+    )
+
+
+class Notification(Base):
+    """Messages for the owner. Shown in the app now; sent by push and Telegram once
+    alerts arrive (Milestone 4)."""
+
+    __tablename__ = "notifications"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(
+        UTCDateTime, default=utcnow, server_default=sa.func.now(), index=True
+    )
+    kind: Mapped[str] = mapped_column(sa.String(32))  # e.g. feed_paused, feed_recovered
+    title: Mapped[str] = mapped_column(sa.String(200))
+    body: Mapped[str] = mapped_column(sa.Text)
+    sent_at: Mapped[datetime | None] = mapped_column(UTCDateTime)
 
 
 class WorkerHeartbeat(Base):

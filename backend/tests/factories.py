@@ -11,16 +11,15 @@ from edgewise.db.models import (
     Bookmaker,
     Competition,
     Event,
-    FairPrice,
     Market,
     MarketSelection,
     PriceSide,
-    PriceSnapshot,
     PriceSource,
     Team,
 )
 from edgewise.domain.finder import Candidate
 from edgewise.domain.markets import MarketType, Selection
+from edgewise.services.ingest import record_fair_price, record_price
 
 _counter = 0
 
@@ -71,28 +70,27 @@ def make_bookmaker(session: Session, key: str = "sportsbet", **kwargs: object) -
 def add_book_price(
     session: Session, selection_id: int, bookmaker_id: int, odds: str, at: datetime
 ) -> None:
-    session.add(
-        PriceSnapshot(
-            selection_id=selection_id,
-            source=PriceSource.ODDS_FEED,
-            bookmaker_id=bookmaker_id,
-            side=PriceSide.BACK,
-            odds=Decimal(odds),
-            captured_at=at,
-        )
+    """A bookmaker price seen at `at`, stored the way the odds feed stores it."""
+    record_price(
+        session,
+        selection_id=selection_id,
+        source=PriceSource.ODDS_FEED,
+        bookmaker_id=bookmaker_id,
+        side=PriceSide.BACK,
+        odds=Decimal(odds),
+        seen_at=at,
     )
 
 
 def add_fair_price(session: Session, selection_id: int, prob: float, at: datetime) -> None:
-    session.add(
-        FairPrice(
-            selection_id=selection_id,
-            fair_prob=prob,
-            method="multiplicative",
-            mid_overround=1.0,
-            inputs={},
-            as_of=at,
-        )
+    """A fair probability confirmed at `at`, stored the way the exchange feed stores it."""
+    record_fair_price(
+        session,
+        selection_id=selection_id,
+        fair_prob=prob,
+        method="multiplicative",
+        mid_overround=1.0,
+        as_of=at,
     )
 
 

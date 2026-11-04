@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import secrets
 import time
+from decimal import Decimal
 from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
@@ -13,6 +14,8 @@ from zoneinfo import ZoneInfo
 
 from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from edgewise.domain.pricing import MarginMethod
 
 _PLACEHOLDER_SECRETS = {"", "change-me", "changeme", "secret"}
 
@@ -70,13 +73,28 @@ class Settings(BaseSettings):
     # Alerts (Milestone 4). The lab stack can never send them, whatever this says.
     alerts_enabled: bool = True
 
-    # Data feeds (Milestone 2)
-    odds_api_key: SecretStr | None = None
-    football_data_api_key: SecretStr | None = None
+    # Data feeds (Milestone 2). A feed runs only when its keys are set.
+    odds_api_key: SecretStr | None = None  # the-odds-api.com
+    odds_api_regions: str = "au"
+    odds_api_url: str = "https://api.the-odds-api.com/v4"
+    football_data_api_key: SecretStr | None = None  # api-football.com
+    api_football_url: str = "https://v3.football.api-sports.io"
     betfair_app_key: SecretStr | None = None
     betfair_username: str | None = None
     betfair_password: SecretStr | None = None
-    betfair_cert_path: str | None = None
+    betfair_cert_path: str | None = None  # folder with one .crt and one .key (optional)
+    betfair_identity_url: str = "https://identitysso.betfair.com.au/api"
+    betfair_cert_identity_url: str = "https://identitysso-cert.betfair.com.au/api"
+    betfair_betting_url: str = "https://api.betfair.com/exchange/betting/rest/v1.0"
+    # How far ahead to collect matches and prices.
+    feed_horizon_days: int = Field(default=7, ge=1, le=14)
+    # Fair price method (docs/ARCHITECTURE.md): multiplicative baseline, max back/lay gap.
+    fair_price_method: MarginMethod = MarginMethod.MULTIPLICATIVE
+    fair_price_max_spread: Decimal = Decimal("0.05")
+
+    @property
+    def betfair_configured(self) -> bool:
+        return bool(self.betfair_app_key and self.betfair_username and self.betfair_password)
 
     @model_validator(mode="before")
     @classmethod

@@ -12,7 +12,15 @@ from decimal import Decimal
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from edgewise.db.models import Bet, Event, FairPrice, PriceSide, PriceSnapshot, PriceSource, Signal
+from edgewise.db.models import (
+    Bet,
+    Event,
+    LatestFairPrice,
+    LatestPrice,
+    PriceSide,
+    PriceSource,
+    Signal,
+)
 from edgewise.domain.finder import FinderResult
 from edgewise.domain.freshness import DEFAULT_FRESHNESS, FreshnessPolicy
 from edgewise.domain.lifecycle import (
@@ -189,26 +197,24 @@ def undo_decision(session: Session, signal_id: int, *, now: datetime, settled: b
 def latest_bookmaker_price(
     session: Session, selection_id: int, bookmaker_id: int
 ) -> tuple[Decimal, datetime] | None:
+    """The bookmaker's current price and when the feed last confirmed it."""
     row = session.execute(
-        select(PriceSnapshot.odds, PriceSnapshot.captured_at)
-        .where(
-            PriceSnapshot.selection_id == selection_id,
-            PriceSnapshot.source == PriceSource.ODDS_FEED,
-            PriceSnapshot.bookmaker_id == bookmaker_id,
-            PriceSnapshot.side == PriceSide.BACK,
+        select(LatestPrice.odds, LatestPrice.last_seen_at).where(
+            LatestPrice.selection_id == selection_id,
+            LatestPrice.source == PriceSource.ODDS_FEED,
+            LatestPrice.bookmaker_id == bookmaker_id,
+            LatestPrice.side == PriceSide.BACK,
         )
-        .order_by(PriceSnapshot.captured_at.desc(), PriceSnapshot.id.desc())
-        .limit(1)
     ).first()
     return (row[0], row[1]) if row else None
 
 
 def latest_fair_price(session: Session, selection_id: int) -> tuple[float, datetime] | None:
+    """The current fair probability and when the exchange last confirmed it."""
     row = session.execute(
-        select(FairPrice.fair_prob, FairPrice.as_of)
-        .where(FairPrice.selection_id == selection_id)
-        .order_by(FairPrice.as_of.desc(), FairPrice.id.desc())
-        .limit(1)
+        select(LatestFairPrice.fair_prob, LatestFairPrice.as_of).where(
+            LatestFairPrice.selection_id == selection_id
+        )
     ).first()
     return (row[0], row[1]) if row else None
 
