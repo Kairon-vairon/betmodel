@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Mapping
 from datetime import UTC, datetime
 from urllib.parse import urlsplit
 
@@ -17,6 +17,29 @@ from edgewise.config import Settings, get_settings
 from edgewise.db.session import make_engine, make_session_factory
 
 _UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
+_SAME_SITE_FETCHES = {"same-origin", "none"}
+
+
+def is_cross_site(method: str, headers: Mapping[str, str]) -> bool:
+    """True when a state-changing request was sent by another website.
+
+    1. Modern browsers say where a request came from in Sec-Fetch-Site, which page scripts
+       cannot set. Only "same-origin" (our own pages) and "none" (typed or bookmarked by
+       the person) pass. This works behind any proxy, even one that rewrites Host.
+    2. Browsers without it: the Origin must match the host the browser was talking to,
+       the Host header or X-Forwarded-Host when a proxy rewrote Host.
+    A request with neither header did not come from a browser page on another site.
+    """
+    if method not in _UNSAFE_METHODS:
+        return False
+    fetch_site = headers.get("sec-fetch-site")
+    if fetch_site is not None:
+        return fetch_site not in _SAME_SITE_FETCHES
+    origin = headers.get("origin")
+    if origin is None:
+        return False
+    hosts = {headers.get("host"), headers.get("x-forwarded-host")} - {None}
+    return urlsplit(origin).netloc not in hosts
 
 
 def _utcnow() -> datetime:
@@ -48,17 +71,9 @@ def create_app(
         request: Request, call_next: Callable[[Request], Awaitable[Response]]
     ) -> Response:
         """Refuse state-changing requests sent from another website (CSRF defence in depth;
-        the session cookie is also SameSite=Strict).
-
-        The browser's Origin must match the host it was talking to: the Host header, or
-        X-Forwarded-Host when a proxy rewrote Host. A cross-site page cannot set either.
-        """
-        if request.method in _UNSAFE_METHODS:
-            origin = request.headers.get("origin")
-            if origin is not None:
-                hosts = {request.headers.get("host"), request.headers.get("x-forwarded-host")}
-                if urlsplit(origin).netloc not in hosts - {None}:
-                    return JSONResponse({"detail": "Cross-site request refused."}, status_code=403)
+        the session cookie is also SameSite=Strict)."""
+        if is_cross_site(request.method, request.headers):
+            return JSONResponse({"detail": "Cross-site request refused."}, status_code=403)
         response = await call_next(request)
         response.headers.setdefault("Cache-Control", "no-store")
         return response
