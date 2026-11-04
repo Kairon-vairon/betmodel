@@ -150,7 +150,10 @@ docker compose cp db:/tmp/edgewise-backup.sql edgewise-backup.sql
 
 | What you see | What to do |
 |---|---|
-| `docker: command not found`, `Cannot connect to the Docker daemon` or `error during connect` | Docker Desktop isn't running. Open it and wait (step 1, point 4), then try again. |
+| `docker: command not found`, `Cannot connect to the Docker daemon`, `error during connect`, or (Windows) `failed to connect to the docker API at npipe:...dockerDesktopLinuxEngine` | Docker Desktop isn't running. Open it from the Start menu (Mac: Applications) and wait until it says **Engine running** (step 1, point 4). Check with `docker version`: it should list a **Server** section. Then try again. |
+| Windows: Docker Desktop shows an error mentioning **WSL** | Open PowerShell as administrator (Start menu, type `PowerShell`, right-click > **Run as administrator**), run `wsl --update` (or `wsl --install` if it says WSL isn't installed), restart the computer, then open Docker Desktop again. |
+| Windows: **Virtualization support not detected** | Virtualization is switched off in the laptop's start-up (BIOS) settings and has to be turned on there. The steps depend on the laptop brand: ask Claude, with the make and model. |
+| Windows: the tray whale menu offers **Switch to Linux containers** | Click it. Edgewise needs Linux containers (the default). |
 | `port is already allocated` | Another app uses port 8080. Mac: `echo "EDGEWISE_PORT=8081" > .env`. Windows: `Set-Content .env "EDGEWISE_PORT=8081"`. Then run `docker compose up -d` and open http://localhost:8081. |
 | The page doesn't open | Run `docker compose ps`. If something isn't **Up**, run `docker compose up -d` and wait a minute. |
 | "Too many attempts" when signing in | Wait 15 minutes. Five wrong tries lock sign-in for 15 minutes. |
