@@ -8,8 +8,9 @@ Value-betting software for soccer in the top 5 European leagues. It finds bookma
 
 Phase 1 (bookmaker value finder) in progress.
 
-- **Built:** Milestone 1 foundations: server, database, sign-in with two-factor codes, the installable web app, Docker setup and CI. Also the core of the value finder (fair prices, edge, ¼ Kelly stakes, every safety limit) and of settlement (grading every market, profit, closing line value), with tests.
-- **Next:** Milestone 2, data ingestion: fixtures, bookmaker odds, Betfair prices and results.
+- **Built:** Milestone 1 foundations: server, database, sign-in with two-factor codes, the installable web app, Docker setup and CI. Milestone 2, data ingestion: fixtures and results, bookmaker odds, Betfair prices, feed health, and the value finder running on them. The core of settlement (grading every market, profit, closing line value), with tests.
+- **Waiting for:** the data feed keys ([Connecting the data feeds](docs/FEEDS.md)). The feed connections have only been tested against sample replies so far.
+- **Next:** Milestone 4, alerts and approval: phone notifications with Placed / Skip.
 
 To run it on your own computer, follow [Running Edgewise on your own computer](docs/LAPTOP.md). To run it on a server, follow [Setting up the server](docs/SETUP.md).
 
@@ -22,6 +23,7 @@ To run it on your own computer, follow [Running Edgewise on your own computer](d
 - [Lab notebook](lab/NOTEBOOK.md): Claude's running record of experiments
 - [Design](design/README.md): UI preview
 - [Running on your own computer](docs/LAPTOP.md): step-by-step, Mac and Windows
+- [Connecting the data feeds](docs/FEEDS.md): the three keys and where they go
 - [Setting up the server](docs/SETUP.md): step-by-step install on a server
 
 ## Branches

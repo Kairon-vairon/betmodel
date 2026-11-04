@@ -114,6 +114,15 @@ How the code behaves today. Update this when the behaviour changes.
 - `docker compose up` in the repository root runs everything on one computer: no settings file needed, app at `http://localhost:8080` (bound to this computer only), plain-http cookie. Laptop settings live in `compose.override.yaml`.
 - Servers use `infra/stack live|lab`, which names its compose files explicitly (so the laptop settings never load), checks `POSTGRES_PASSWORD` and `DOMAIN`, and adds Caddy (live) or the lab port.
 
+**Data feeds (Milestone 2)** (`backend/edgewise/feeds/`, `services/ingest.py`, `worker/feeds.py`)
+- API-Football fixtures are the reference list of matches. Odds API and Betfair matches are linked to a fixture only when kick-off times are within an hour, both teams look alike, and no other fixture comes close (`feeds/matching.py`). Linked names are saved as team aliases, so later matches link exactly. Unlinked matches are listed in the feed's details.
+- Bookmaker prices come only from The Odds API (h2h, totals, spreads; region `au`). Bookmakers not in the `bookmakers` table are ignored.
+- Betfair is read-only: catalogue (one call per market type) and best back/lay prices. Certificate login is used if `BETFAIR_CERT_PATH` is set, otherwise username/password login. The client logs in again once when a session expires. Asian handicap lines are paired on the home team's handicap.
+- `latest_prices` / `latest_fair_prices` hold the newest value and when it was last confirmed; `price_snapshots` / `fair_prices` get a row only when a value changes. With a delayed Betfair key, prices count as 3 minutes older than when they were read.
+- Polling follows the schedule above, capped for the odds feed at every 2 minutes (it refreshes about every 5). Fixtures every 6 hours; results every 15 minutes once a match should be over and until its result arrives; Betfair catalogue every 30 minutes; value finder every minute and after new prices.
+- A feed pauses after 3 failures in a row once it has been failing for at least 5 minutes, or at once on a refused key or login, with one notice; it resumes with one notice on the next success. During an outage only one request per feed is tried per tick. While the odds feed or Betfair is paused, no bets are suggested (and stale prices are refused anyway).
+- Not yet run against the live services (no keys yet). The tests use sample replies in each provider's documented format.
+
 **Data integrity**
 - `price_snapshots`, `bankroll_ledger` and `audit_log` are append-only: database triggers refuse updates, deletes and truncation.
 - All times are stored in UTC. The code refuses times without a time zone.

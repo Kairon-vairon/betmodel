@@ -61,3 +61,19 @@ def test_recovery_unpauses_with_one_notice(db: Session) -> None:
     status = db.get(FeedStatus, ODDS)
     assert status is not None and status.details == {"credits_remaining": 400}
     assert status.last_error is None and status.consecutive_failures == 0
+
+
+def test_a_short_blip_after_working_is_not_a_pause(db: Session) -> None:
+    feed_succeeded(db, ODDS, now=NOW)
+    for seconds in (30, 60, 90, 120):
+        feed_failed(db, ODDS, FeedError("timeout"), now=NOW + timedelta(seconds=seconds))
+    assert paused_feeds(db) == set() and notices(db) == []
+    feed_failed(db, ODDS, FeedError("timeout"), now=NOW + timedelta(minutes=5))
+    assert paused_feeds(db) == {ODDS}
+    assert len(notices(db)) == 1
+
+
+def test_a_refused_key_pauses_even_right_after_working(db: Session) -> None:
+    feed_succeeded(db, ODDS, now=NOW)
+    feed_failed(db, ODDS, FeedAuthError("refused"), now=NOW + timedelta(seconds=30))
+    assert paused_feeds(db) == {ODDS}

@@ -49,7 +49,12 @@ def test_overview_reports_bankroll_limits_and_worker(
     empty = client.get("/api/overview").json()
     assert Decimal(empty["bankroll"]) == 0
     assert empty["alerts_paused"] is False
-    assert empty["feeds"] == [] and empty["workers"] == []
+    assert [(f["feed"], f["state"]) for f in empty["feeds"]] == [
+        ("fixtures", "not_configured"),
+        ("odds_feed", "not_configured"),
+        ("betfair", "not_configured"),
+    ]
+    assert empty["notices"] == [] and empty["workers"] == []
 
     with transaction(session_factory) as session:
         portfolio.add_ledger_entry(
@@ -69,3 +74,42 @@ def test_overview_reports_bankroll_limits_and_worker(
     assert data["workers"][0]["healthy"] is True
     clock.advance(minutes=5)
     assert client.get("/api/overview").json()["workers"][0]["healthy"] is False
+
+
+def test_overview_shows_each_feed_and_recent_notices(
+    owner: OwnerLogin,
+    clock: FakeClock,
+    session_factory: sessionmaker[Session],
+) -> None:
+    from fastapi.testclient import TestClient as Client
+    from pydantic import SecretStr
+
+    from edgewise.api.main import create_app
+    from edgewise.feeds.common import FeedAuthError
+    from edgewise.services.feeds import BETFAIR, ODDS, feed_failed, feed_succeeded
+    from tests.conftest import SECRET_KEY
+
+    settings = Settings(
+        app_secret_key=SECRET_KEY,
+        database_url="sqlite://",
+        cookie_secure=True,
+        odds_api_key=SecretStr("k"),
+        betfair_app_key=SecretStr("a"),
+        betfair_username="u",
+        betfair_password=SecretStr("p"),
+    )
+    with transaction(session_factory) as session:
+        feed_succeeded(session, ODDS, now=clock(), details={"credits_remaining": 480})
+        feed_failed(session, BETFAIR, FeedAuthError("Betfair refused the login"), now=clock())
+    with Client(create_app(settings, session_factory, clock), base_url="https://testserver") as c:
+        _sign_in(c, owner, clock)
+        data = c.get("/api/overview").json()
+    feeds = {f["feed"]: f for f in data["feeds"]}
+    assert feeds["fixtures"]["state"] == "not_configured"
+    assert feeds["odds_feed"]["state"] == "ok"
+    assert feeds["odds_feed"]["details"] == {"credits_remaining": 480}
+    assert feeds["betfair"]["state"] == "paused"
+    assert feeds["betfair"]["last_error"] == "Betfair refused the login"
+    (notice,) = data["notices"]
+    assert notice["kind"] == "feed_paused"
+    assert notice["title"] == "Betfair Exchange prices has stopped"

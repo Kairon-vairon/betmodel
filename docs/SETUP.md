@@ -100,6 +100,10 @@ the authenticator app.
 - **Android (Chrome):** menu **⋮**, then **Install app** (or **Add to Home screen**).
 - **Computer (Chrome or Edge):** the install icon at the right of the address bar.
 
+## 9. Connect the data feeds
+
+Follow [Connecting the data feeds](FEEDS.md).
+
 ## Everyday commands
 
 Run these from the `betmodel` folder on the server.

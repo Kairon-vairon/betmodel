@@ -39,12 +39,19 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export type Owner = { username: string }
 
+export type FeedState = 'not_configured' | 'waiting' | 'ok' | 'paused'
+
 export type Feed = {
   feed: string
+  name: string
+  state: FeedState
   last_success_at: string | null
   paused: boolean
   last_error: string | null
+  details: Record<string, unknown>
 }
+
+export type Notice = { created_at: string; kind: string; title: string; body: string }
 
 export type WorkerStatus = { worker: string; last_beat_at: string; healthy: boolean }
 
@@ -59,6 +66,7 @@ export type Overview = {
   pause_reasons: string[]
   awaiting_approval: number
   feeds: Feed[]
+  notices: Notice[]
   workers: WorkerStatus[]
 }
 

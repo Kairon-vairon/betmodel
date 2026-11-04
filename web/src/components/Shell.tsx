@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import type { Overview } from '../api'
+import type { Feed, Overview } from '../api'
 import { sydneyTime } from '../format'
 import { Link } from '../router'
 import {
@@ -34,10 +34,21 @@ const TABS = [
   { to: '/settings', label: 'Limits', icon: SlidersIcon },
 ] as const
 
-const FEED_NAMES: Record<string, string> = {
-  betfair: 'Betfair prices',
+export const FEED_NAMES: Record<string, string> = {
+  fixtures: 'Fixtures & results',
   odds_feed: 'Bookmaker odds',
-  results: 'Results',
+  betfair: 'Betfair prices',
+}
+
+export function feedStateText(feed: Feed): string {
+  if (feed.state === 'not_configured') return 'not connected'
+  if (feed.state === 'waiting') return 'starting'
+  if (feed.state === 'paused') return 'paused'
+  return feed.last_success_at ? sydneyTime(feed.last_success_at) : 'running'
+}
+
+export function feedDot(feed: Feed): string {
+  return feed.state === 'ok' ? 'ok' : feed.state === 'paused' ? 'warn' : ''
 }
 
 function Brand() {
@@ -67,13 +78,8 @@ function FeedsBox({ overview }: { overview: Overview | null }) {
       ) : (
         feeds.map((feed) => (
           <div className="feed-row" key={feed.feed}>
-            <span className={`dot ${feed.paused ? 'warn' : 'ok'}`} />
-            {FEED_NAMES[feed.feed] ?? feed.feed} ·{' '}
-            {feed.paused
-              ? 'paused'
-              : feed.last_success_at
-                ? sydneyTime(feed.last_success_at)
-                : 'waiting'}
+            <span className={`dot ${feedDot(feed)}`} />
+            {FEED_NAMES[feed.feed] ?? feed.name} · {feedStateText(feed)}
           </div>
         ))
       )}

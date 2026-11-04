@@ -100,6 +100,11 @@ email, password and a code from the authenticator app.
 To get an Edgewise icon like any other app: click the **install** icon at the right
 end of the address bar (or the browser menu > **Install**).
 
+## 8. Connect the data feeds (when you have the keys)
+
+Follow [Connecting the data feeds](FEEDS.md). Until then the dashboard shows each feed as
+**No key yet**.
+
 ## Every day
 
 Edgewise runs by itself whenever Docker Desktop is running. While the laptop is asleep

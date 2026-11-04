@@ -1,13 +1,14 @@
 import type { Overview } from '../api'
 import { WarningIcon } from '../components/icons'
+import { FEED_NAMES } from '../components/Shell'
 import { money, percent, sydneyDate, sydneyTime } from '../format'
 import { Link } from '../router'
 
 const MILESTONES = [
   { name: 'Foundations', detail: 'Server, database, sign-in with 2FA, this app', state: 'Built' },
-  { name: 'Data ingestion', detail: 'Fixtures, bookmaker odds, Betfair prices, results', state: 'Next' },
-  { name: 'Value finder', detail: 'Fair prices, edge, ¼ Kelly stake, every safety limit', state: 'Core built' },
-  { name: 'Alerts and approval', detail: 'Push and Telegram, Placed / Skip in seconds', state: 'Planned' },
+  { name: 'Data ingestion', detail: 'Fixtures, odds, Betfair prices, results: needs your keys', state: 'Built' },
+  { name: 'Value finder', detail: 'Fair prices, edge, ¼ Kelly stake, every safety limit', state: 'Built' },
+  { name: 'Alerts and approval', detail: 'Push and Telegram, Placed / Skip in seconds', state: 'Next' },
   { name: 'Bet log and settlement', detail: 'Auto-grading, CLV, bankroll ledger', state: 'Core built' },
   { name: 'Web app screens', detail: 'Value bets, bet log, settings from the design', state: 'Started' },
 ] as const
@@ -112,7 +113,11 @@ export function DashboardPage({ overview, error }: { overview: Overview | null; 
         <section className="card" aria-label="Awaiting approval">
           <span className="label">Awaiting approval</span>
           <span className="stat-value">{overview ? `${overview.awaiting_approval} bets` : '—'}</span>
-          <span className="stat-note">Value bets start once prices flow in</span>
+          <span className="stat-note">
+            {overview?.feeds.some((f) => f.state === 'not_configured')
+              ? 'Connect the data feeds to start'
+              : 'Checked every minute'}
+          </span>
         </section>
       </div>
 
@@ -141,6 +146,26 @@ export function DashboardPage({ overview, error }: { overview: Overview | null; 
 
         <div className="grid" style={{ alignContent: 'start' }}>
           {overview && <SafetyRails overview={overview} />}
+          {overview && overview.notices.length > 0 && (
+            <section className="card" aria-labelledby="notices-title">
+              <h2 id="notices-title">Recent notices</h2>
+              <div className="list">
+                {overview.notices.map((notice) => (
+                  <div className="list-row" key={`${notice.created_at}-${notice.title}`} style={{ alignItems: 'flex-start' }}>
+                    <div>
+                      <div>{notice.title}</div>
+                      <div className="dim" style={{ fontSize: 13 }}>
+                        {notice.body}
+                      </div>
+                    </div>
+                    <span className="value dim mono" style={{ fontSize: 12 }}>
+                      {sydneyTime(notice.created_at)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
           <section className="card" aria-labelledby="system-title">
             <h2 id="system-title">System</h2>
             <div className="list">
@@ -156,12 +181,17 @@ export function DashboardPage({ overview, error }: { overview: Overview | null; 
                   )}
                 </span>
               </div>
-              <div className="list-row">
-                <span>Data feeds</span>
-                <span className="value dim">
-                  {overview && overview.feeds.length > 0 ? `${overview.feeds.length} connected` : 'Not connected yet'}
-                </span>
-              </div>
+              {(overview?.feeds ?? []).map((feed) => (
+                <div className="list-row" key={feed.feed}>
+                  <span>{FEED_NAMES[feed.feed] ?? feed.name}</span>
+                  <span className={`value ${feed.state === 'ok' ? 'accent' : feed.state === 'paused' ? 'negative' : 'dim'}`}>
+                    {feed.state === 'ok' && feed.last_success_at ? `Updated ${sydneyTime(feed.last_success_at)}` : null}
+                    {feed.state === 'paused' ? 'Paused' : null}
+                    {feed.state === 'waiting' ? 'Starting' : null}
+                    {feed.state === 'not_configured' ? 'No key yet' : null}
+                  </span>
+                </div>
+              ))}
               <div className="list-row">
                 <span>Bet placement</span>
                 <span className="value dim">Manual, by you, at the bookmaker</span>

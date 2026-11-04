@@ -7,7 +7,7 @@ one per failed request.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
 from sqlalchemy import select
@@ -27,6 +27,10 @@ FEED_NAMES = {
     BETFAIR: "Betfair Exchange prices",
 }
 PAUSE_AFTER_FAILURES = 3
+# A feed that worked moments ago isn't paused for a short blip (e.g. the laptop's Wi-Fi):
+# stale prices are refused anyway, so this only avoids "stopped / working again" notice
+# pairs.
+PAUSE_GRACE = timedelta(minutes=5)
 
 
 def notify(session: Session, *, kind: str, title: str, body: str, now: datetime) -> Notification:
@@ -78,7 +82,11 @@ def feed_failed(session: Session, feed: str, error: Exception, *, now: datetime)
     status.last_error = str(error)[:500]
     status.consecutive_failures = (status.consecutive_failures or 0) + 1
     refused = isinstance(error, FeedAuthError)
-    if status.paused or not (refused or status.consecutive_failures >= PAUSE_AFTER_FAILURES):
+    worked_recently = (
+        status.last_success_at is not None and now - status.last_success_at < PAUSE_GRACE
+    )
+    persistent = status.consecutive_failures >= PAUSE_AFTER_FAILURES and not worked_recently
+    if status.paused or not (refused or persistent):
         return False
     status.paused, status.paused_since, status.owner_notified_at = True, now, now
     if refused:

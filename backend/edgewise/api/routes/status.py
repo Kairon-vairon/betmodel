@@ -4,18 +4,22 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import ROUND_FLOOR, Decimal
+from typing import Any
 
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy import func, select, text
+from sqlalchemy.orm import Session
 
 from edgewise import __version__
 from edgewise.api.deps import ClockDep, DbDep, OwnerDep, SettingsDep
-from edgewise.db.models import FeedStatus, Signal, WorkerHeartbeat
+from edgewise.config import Settings
+from edgewise.db.models import FeedStatus, Notification, Signal, WorkerHeartbeat
 from edgewise.domain.lifecycle import SignalStatus
 from edgewise.domain.limits import DEFAULT_LIMITS
 from edgewise.services import limits as limits_service
 from edgewise.services import portfolio
+from edgewise.services.feeds import BETFAIR, FEED_NAMES, FEEDS, FIXTURES, ODDS
 
 router = APIRouter(prefix="/api", tags=["status"])
 
@@ -68,9 +72,20 @@ def get_limits(_: OwnerDep, db: DbDep) -> LimitsOut:
 
 class FeedOut(BaseModel):
     feed: str
+    name: str
+    # not_configured (no key) / waiting (no reply yet) / ok / paused
+    state: str
     last_success_at: datetime | None
     paused: bool
     last_error: str | None
+    details: dict[str, Any]
+
+
+class NoticeOut(BaseModel):
+    created_at: datetime
+    kind: str
+    title: str
+    body: str
 
 
 class WorkerOut(BaseModel):
@@ -90,7 +105,40 @@ class Overview(BaseModel):
     pause_reasons: list[str]
     awaiting_approval: int
     feeds: list[FeedOut]
+    notices: list[NoticeOut]
     workers: list[WorkerOut]
+
+
+def _feeds(db: Session, settings: Settings) -> list[FeedOut]:
+    configured = {
+        FIXTURES: bool(settings.football_data_api_key),
+        ODDS: bool(settings.odds_api_key),
+        BETFAIR: settings.betfair_configured,
+    }
+    rows = {f.feed: f for f in db.scalars(select(FeedStatus))}
+    out: list[FeedOut] = []
+    for feed in FEEDS:
+        row = rows.get(feed)
+        if not configured[feed]:
+            state = "not_configured"
+        elif row is not None and row.paused:
+            state = "paused"
+        elif row is not None and row.last_success_at is not None:
+            state = "ok"
+        else:
+            state = "waiting"
+        out.append(
+            FeedOut(
+                feed=feed,
+                name=FEED_NAMES[feed],
+                state=state,
+                last_success_at=row.last_success_at if row else None,
+                paused=bool(row and row.paused),
+                last_error=row.last_error if row else None,
+                details=dict(row.details or {}) if row else {},
+            )
+        )
+    return out
 
 
 @router.get("/overview", response_model=Overview)
@@ -115,14 +163,12 @@ def overview(_: OwnerDep, settings: SettingsDep, clock: ClockDep, db: DbDep) -> 
         alerts_paused=bool(pauses),
         pause_reasons=[p.reason.value for p in pauses],
         awaiting_approval=awaiting or 0,
-        feeds=[
-            FeedOut(
-                feed=f.feed,
-                last_success_at=f.last_success_at,
-                paused=f.paused,
-                last_error=f.last_error,
+        feeds=_feeds(db, settings),
+        notices=[
+            NoticeOut(created_at=n.created_at, kind=n.kind, title=n.title, body=n.body)
+            for n in db.scalars(
+                select(Notification).order_by(Notification.created_at.desc()).limit(5)
             )
-            for f in db.scalars(select(FeedStatus).order_by(FeedStatus.feed))
         ],
         workers=[
             WorkerOut(

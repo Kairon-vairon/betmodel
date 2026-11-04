@@ -207,3 +207,32 @@ def test_feeds_without_keys_are_skipped(
     assert feeds.configured() == {"fixtures": False, "odds_feed": False, "betfair": False}
     report = feeds.tick()
     assert report.errors == [] and report.signals == 0
+
+
+class DownFootball(FakeFootball):
+    def fixtures(self, **kwargs: Any) -> Any:
+        self.calls += 1
+        raise FeedError("Couldn't reach API-Football (ConnectError)")
+
+
+def test_an_outage_counts_once_per_tick_not_once_per_league(
+    world: None, settings: Settings, session_factory: sessionmaker[Session], clock: FakeClock
+) -> None:
+    with transaction(session_factory) as session:
+        for code, league in (("LALIGA", 140), ("SERIEA", 135), ("BUNDESLIGA", 78)):
+            session.add(
+                Competition(code=code, name=code, country="x", api_football_league_id=league)
+            )
+    football = DownFootball()
+    feeds = runner(settings, session_factory, clock, football=football)
+    feeds.tick()
+    assert football.calls == 1  # the other three leagues aren't tried during the outage
+    with session_factory() as session:
+        assert paused_feeds(session) == set()
+    for _ in range(2):
+        clock.advance(minutes=1)
+        feeds.tick()
+    assert football.calls == 3
+    with session_factory() as session:
+        assert paused_feeds(session) == {"fixtures"}
+    assert count(session_factory, Notification, Notification.kind == "feed_paused") == 1

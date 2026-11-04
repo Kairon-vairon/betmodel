@@ -16,8 +16,13 @@ const overview = {
   alerts_paused: false,
   pause_reasons: [],
   awaiting_approval: 1,
-  feeds: [],
-  workers: [{ worker: 'worker@vm', last_beat_at: '2026-11-07T09:00:00Z', healthy: true }],
+  feeds: [
+    { feed: 'fixtures', name: 'Fixtures and results (API-Football)', state: 'ok', last_success_at: '2026-11-07T08:58:00Z', paused: false, last_error: null, details: {} },
+    { feed: 'odds_feed', name: 'Bookmaker odds (The Odds API)', state: 'not_configured', last_success_at: null, paused: false, last_error: null, details: {} },
+    { feed: 'betfair', name: 'Betfair Exchange prices', state: 'paused', last_success_at: null, paused: true, last_error: 'Betfair refused the login', details: {} },
+  ],
+  notices: [] as { created_at: string; kind: string; title: string; body: string }[],
+  workers: [{ worker: 'worker', last_beat_at: '2026-11-07T09:00:00Z', healthy: true }],
 }
 
 const limits = {
@@ -159,6 +164,28 @@ describe('signed in', () => {
     render(<App />)
     expect(await screen.findByRole('heading', { name: 'Bet log' })).toBeInTheDocument()
     expect(screen.getByText('Coming soon')).toBeInTheDocument()
+  })
+
+  it('shows each data feed and recent notices', async () => {
+    signedIn({
+      '/api/overview': () => ({
+        status: 200,
+        body: {
+          ...overview,
+          notices: [{ created_at: '2026-11-07T08:59:00Z', kind: 'feed_paused', title: 'Betfair Exchange prices has stopped', body: 'Value bets that need it are paused.' }],
+        },
+      }),
+    })
+    render(<App />)
+    const sidebar = await screen.findByLabelText('Data feeds')
+    expect(await within(sidebar).findByText(/Bookmaker odds · not connected/)).toBeInTheDocument()
+    expect(within(sidebar).getByText(/Betfair prices · paused/)).toBeInTheDocument()
+    const system = screen.getByRole('region', { name: 'System' })
+    expect(within(system).getByText('No key yet')).toBeInTheDocument()
+    expect(within(system).getByText('Paused')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Recent notices' })).toBeInTheDocument()
+    expect(screen.getByText('Betfair Exchange prices has stopped')).toBeInTheDocument()
+    expect(screen.getByText('Connect the data feeds to start')).toBeInTheDocument()
   })
 
   it('warns when alerts are paused', async () => {

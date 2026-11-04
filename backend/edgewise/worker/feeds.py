@@ -224,7 +224,7 @@ class FeedRunner:
                 self._last[("fixtures", competition.code)] = (
                     now - FIXTURES_EVERY + RETRY_AFTER_FAILURE
                 )
-                continue
+                break  # one failure per tick: the other leagues wait for the next try
             with transaction(self.factory) as session:
                 stored = session.get(Competition, competition.id)
                 assert stored is not None
@@ -349,7 +349,7 @@ class FeedRunner:
             self._last[("odds", code)] = now
             response = self._attempt(ODDS, partial(odds.odds, sport_key), now, report)
             if response is None:
-                continue
+                break  # one failure per tick: the other leagues wait for the next try
             with transaction(self.factory) as session:
                 competition = session.get(Competition, competition_id)
                 assert competition is not None
