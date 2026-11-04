@@ -92,6 +92,15 @@ def build_candidates(
     return candidates, fair_rows
 
 
+def value_bet_title(signal: Signal) -> str:
+    """e.g. "Value bet: Brighton 1.95 at Sportsbet (+4.7%)"."""
+    label = signal.selection.label or signal.selection.code.value
+    return (
+        f"Value bet: {label} {signal.offered_odds:.2f} at {signal.bookmaker.name} "
+        f"({signal.edge:+.1%})"
+    )
+
+
 @dataclass
 class FinderRun:
     created: list[Signal] = field(default_factory=list)
@@ -133,7 +142,7 @@ def run_value_finder(
             session,
             kind="value_bet",
             now=now,
-            title=f"Value bet: {signal.reason.split('.')[0]}",
+            title=value_bet_title(signal),
             body=signal.reason,
         )
     log.info("Value finder: %d candidates, %d new suggestion(s)", len(candidates), len(created))
